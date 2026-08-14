@@ -1,0 +1,76 @@
+.post-layout {
+    min-width: 0;
+}
+
+.post-toc {
+    min-width: 0;
+}
+
+@media screen and (min-width: 1280px) {
+    .main:has(.post-layout.has-toc) {
+        max-width: 1180px;
+    }
+
+    .post-layout.has-toc {
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 48px;
+        align-items: start;
+    }
+
+    .post-layout.has-toc .post-content {
+        grid-column: 2;
+        grid-row: 1;
+        margin-top: 30px;
+    }
+
+    .post-layout.has-toc .post-toc {
+        grid-column: 1;
+        grid-row: 1;
+        position: sticky;
+        top: calc(var(--header-height) + 24px);
+        max-height: calc(100vh - var(--header-height) - 48px);
+        overflow: auto;
+        scrollbar-width: thin;
+    }
+
+    .post-layout.has-toc details.toc {
+        margin: 30px 0 0;
+    }
+
+    .post-layout.has-toc details.toc summary {
+        cursor: default;
+        list-style: none;
+        padding: 12px 16px 8px;
+    }
+
+    .post-layout.has-toc details.toc summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .post-layout.has-toc details.toc .inner {
+        margin: 0;
+        padding: 4px 16px 14px;
+        font-size: 14px;
+        line-height: 1.55;
+    }
+
+    .post-layout.has-toc details.toc:not([open]) > .inner {
+        display: block;
+    }
+
+    .post-layout.has-toc details.toc:not([open])::details-content {
+        height: auto;
+        opacity: 1;
+        overflow: visible;
+        content-visibility: visible;
+    }
+
+    .post-layout.has-toc details.toc li {
+        margin: 6px 0;
+    }
+
+    .post-layout.has-toc details.toc li ul {
+        margin-inline-start: 14px;
+    }
+}
