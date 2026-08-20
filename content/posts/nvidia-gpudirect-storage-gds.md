@@ -261,6 +261,13 @@ GDS 的价值不是简单地把文件读得更快，而是重构 GPU 应用的�
 
 如果应用的 I/O 可以由 CPU 预先规划，并且主要以较大块、批量方式传输，GDS 通常是更成熟、直接的选择。若 GPU 需要根据 kernel 内部计算结果动态访问海量存储对象，则应继续关注 GIDS。
 
+## 系列导航
+
+- [GDS、GIDS 与 uGDS 有什么区别：从数据直达、GPU 发起到用户态 NVMe](/posts/gds-gids-ugds-comparison/)
+- [NVIDIA GPUDirect Storage（GDS）详解](/posts/nvidia-gpudirect-storage-gds/)
+- [NVIDIA GPU-Initiated Data Storage（GIDS）详解](/posts/nvidia-gpu-initiated-data-storage-gids/)
+- [uGDS 原理解析](/posts/ugds-userspace-gpu-direct-storage/)
+
 ## 参考资料
 
 - NVIDIA GPUDirect Storage Overview Guide

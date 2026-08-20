@@ -339,6 +339,13 @@ GIDS 把 GPU 存储架构从“GPU 被动接收数据”推进到“GPU 主动�
 
 > GDS 让数据绕过 CPU，GIDS 进一步让请求也绕过 CPU。
 
+## 系列导航
+
+- [GDS、GIDS 与 uGDS 有什么区别：从数据直达、GPU 发起到用户态 NVMe](/posts/gds-gids-ugds-comparison/)
+- [NVIDIA GPUDirect Storage（GDS）详解](/posts/nvidia-gpudirect-storage-gds/)
+- [NVIDIA GPU-Initiated Data Storage（GIDS）详解](/posts/nvidia-gpu-initiated-data-storage-gids/)
+- [uGDS 原理解析](/posts/ugds-userspace-gpu-direct-storage/)
+
 ## 参考资料
 
 - NVIDIA GPUDirect Storage Documentation

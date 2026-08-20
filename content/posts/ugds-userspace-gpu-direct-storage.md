@@ -344,6 +344,13 @@ uGDS 的关键价值不只是“SSD 可以直接把数据写进显存”，而�
 
 从系统设计角度看，uGDS 很好地展示了一条趋势：当 GPU 成为主要计算中心后，存储系统不再只是“把数据读进内存”，而需要围绕 GPU 的地址空间、执行流和 PCIe 拓扑重新设计。
 
+## 系列导航
+
+- [GDS、GIDS 与 uGDS 有什么区别：从数据直达、GPU 发起到用户态 NVMe](/posts/gds-gids-ugds-comparison/)
+- [NVIDIA GPUDirect Storage（GDS）详解](/posts/nvidia-gpudirect-storage-gds/)
+- [NVIDIA GPU-Initiated Data Storage（GIDS）详解](/posts/nvidia-gpu-initiated-data-storage-gids/)
+- [uGDS 原理解析](/posts/ugds-userspace-gpu-direct-storage/)
+
 ## 参考资料
 
 - [ScaleX-IO/uGDS](https://github.com/ScaleX-IO/uGDS)
