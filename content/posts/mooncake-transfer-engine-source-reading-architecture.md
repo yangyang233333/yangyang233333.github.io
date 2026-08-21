@@ -92,12 +92,12 @@ TENT 模式 -> 构造 tent::Config -> tent::TransferEngine
   -> 按配置自动安装可用 Transport
 ```
 
-metadata connection string 支持带 scheme 的形式：
+metadata connection string 支持显式指定后端类型，例如：
 
 ```text
-etcd://...
-redis://...
-http://...
+etcd
+redis
+http
 ```
 
 也支持点对点 handshake 模式。连接字符串在 `parseConnectionStringInternal()` 中拆为协议和地址，再由元数据插件创建具体实现。
