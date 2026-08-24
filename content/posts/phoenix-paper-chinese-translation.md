@@ -1,5 +1,5 @@
 ---
-title: "Phoenix 论文中文详译：一种不使用伪缓冲区的 GPU Direct Storage 重构方案"
+title: "Phoenix 论文阅读：一种不使用伪缓冲区的 GPU Direct Storage 重构方案"
 date: 2026-08-24T14:49:50+08:00
 draft: false
 tags: ["GPU Direct Storage", "P2P-DMA", "ZONE_DEVICE", "Linux 内核", "SC 2025", "论文翻译"]
