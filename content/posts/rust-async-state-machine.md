@@ -1,9 +1,10 @@
 ---
 title: "Rust 异步编程原理：Future、状态机、Waker 与 Executor"
-date: 2026-08-14T19:20:00+08:00
+date: 2026-08-25T15:35:00+08:00
 draft: false
 tags: ["Rust", "异步编程", "Future", "状态机", "Tokio"]
 categories: ["技术"]
+description: "面向初学者，从 Future::poll 出发推导 Rust async/await 状态机，并解释 Waker、Executor、Reactor、Pin、并发与阻塞。"
 ---
 
 Rust 的 `async/await` 写起来很像同步代码：调用异步函数、等待结果，然后继续向下执行。但它的底层既不会为每个任务创建一个线程，也不会在 `await` 时阻塞当前线程。
@@ -19,6 +20,32 @@ Rust 的 `async/await` 写起来很像同步代码：调用异步函数、等待
 - Executor 与 Reactor 如何配合；
 - 为什么 Rust 异步需要 `Pin`；
 - Tokio 在这套模型中处于什么位置。
+
+本文定位为 [《Rust Tokio Runtime 原理与最佳实践》](/posts/rust-tokio-runtime-and-best-practices/) 的前置教程。建议先理解本文中的 `Future::poll`、状态机、Waker 和 Executor，再继续阅读 Tokio 的调度器、I/O Driver、任务取消与工程实践。
+
+## 阅读前准备
+
+读者只需要了解 Rust 的基本语法、所有权、枚举和 trait，不要求提前掌握 Tokio。
+
+文中的普通 Rust 代码可以放入一个空项目中实验：
+
+```bash
+cargo new rust-async-basics
+cd rust-async-basics
+```
+
+涉及 Tokio 的示例可加入依赖：
+
+```toml
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+```
+
+学习时建议始终追问三个问题：
+
+1. 当前是谁在调用 `poll`？
+2. Future 返回 `Pending` 前是否安排了唤醒？
+3. 哪些局部变量必须跨越 `await` 保存？
 
 ## 一、为什么需要异步编程
 
@@ -580,6 +607,36 @@ state.waker = Some(cx.waker().clone());
 poll -> Pending -> wake -> poll -> ... -> Ready
 ```
 
+### 一个最小 `block_on` 的概念模型
+
+下面的伪代码故意省略线程安全、任务队列和高效唤醒，只用于说明 Executor 为什么需要响应 Waker：
+
+```rust
+fn block_on<F: Future>(future: F) -> F::Output {
+    let mut future = Box::pin(future);
+
+    loop {
+        let waker = make_waker_for_current_task();
+        let mut context = Context::from_waker(&waker);
+
+        match future.as_mut().poll(&mut context) {
+            Poll::Ready(output) => return output,
+            Poll::Pending => park_until_woken(),
+        }
+    }
+}
+```
+
+它体现了 Executor 的最小职责：
+
+1. 固定 Future 的内存位置；
+2. 构造能重新调度任务的 Waker；
+3. 调用 `poll`；
+4. 遇到 `Pending` 时休眠或执行其他任务；
+5. 被唤醒后再次调用 `poll`。
+
+真实 Tokio Runtime 不会只驱动一个 Future，也不会用如此简单的等待方式。它需要管理大量 Task、就绪队列、工作窃取、I/O 事件和定时器，但最底层仍然遵循同一个 `poll -> Pending -> wake -> poll` 循环。
+
 ## 十、状态机和线程栈有什么区别
 
 同步函数暂停时，操作系统线程会保留完整调用栈：
@@ -757,3 +814,5 @@ poll
 ```
 
 因此，状态机不是 Rust 异步实现中的一个附带概念，而是 `async/await` 能够暂停、保存现场并恢复执行的核心机制。Future 描述状态机的推进接口，Executor 负责调度，Waker 负责重新激活，Reactor 负责感知外部事件，几者共同组成了 Rust 的异步运行模型。
+
+理解这些基础后，可以继续阅读 [《Rust Tokio Runtime 原理与最佳实践》](/posts/rust-tokio-runtime-and-best-practices/)，进一步学习 Tokio 的 Runtime 类型、Task 调度、I/O Driver、定时器、取消安全、背压和优雅退出。
