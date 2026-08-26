@@ -36,7 +36,7 @@ params:
 
   homeInfoParams:
     Title: "Hellokitty's Blog 👋"
-    Content: "欢迎来到我的博客，这里记录技术与思考。"
+    Content: "AI Infra / Storage / Compute / C++"
 
   socialIcons:
     - name: github
