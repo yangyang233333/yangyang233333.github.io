@@ -166,13 +166,11 @@ Event 计时也不是端到端耗时：上面的范围没有包含 host 端数�
 
 CUDA Event 最容易混淆的地方，是 `cudaEventSynchronize` 和 `cudaStreamWaitEvent` 看起来都在“等待”，但等待者完全不同。
 
-| API | 等待者 | 作用 |
-|---|---|---|
-| `cudaEventSynchronize(event)` | CPU 线程 | CPU 阻塞到 event 完成 |
-| `cudaEventQuery(event)` | 无阻塞 | CPU 查询 event 是否完成 |
-| `cudaStreamWaitEvent(stream, event)` | GPU stream | 在设备端建立 stream 间依赖 |
-| `cudaStreamSynchronize(stream)` | CPU 线程 | CPU 等待指定 stream 已提交工作 |
-| `cudaDeviceSynchronize()` | CPU 线程 | CPU 等待整个设备之前提交的工作 |
+- `cudaEventSynchronize(event)`：CPU 线程阻塞，直到 event 完成。
+- `cudaEventQuery(event)`：CPU 非阻塞查询 event 是否完成。
+- `cudaStreamWaitEvent(stream, event)`：GPU stream 在设备端等待 event，不阻塞 CPU。
+- `cudaStreamSynchronize(stream)`：CPU 等待指定 stream 已提交的工作完成。
+- `cudaDeviceSynchronize()`：CPU 等待整个设备此前提交的工作完成。
 
 高性能流水线通常更偏爱 `cudaStreamWaitEvent`。它不会把控制权拉回 CPU，也不会粗暴地同步整个设备。
 
