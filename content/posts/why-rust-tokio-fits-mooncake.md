@@ -1,6 +1,6 @@
 ---
 title: "为什么 Rust + Tokio 更适合 Mooncake 这种 I/O 密集型工作"
-date: 2026-09-05T18:05:00+08:00
+date: 2026-09-05T17:55:00+08:00
 draft: false
 tags: ["Rust", "Tokio", "Mooncake", "异步 I/O", "KV Cache"]
 categories: ["大模型推理"]
