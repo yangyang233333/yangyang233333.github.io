@@ -2,7 +2,7 @@
 
 基于 [Hugo](https://gohugo.io/) + [PaperMod](https://github.com/adityatelange/hugo-PaperMod) 主题搭建，通过 GitHub Actions 自动构建并部署到 GitHub Pages。
 
-- 线上地址：https://yangyang233333.github.io/
+- 线上地址：https://yangyang233333.github.io
 - 主题以 git submodule 形式引入（见 `.gitmodules`）
 
 ## 目录结构
