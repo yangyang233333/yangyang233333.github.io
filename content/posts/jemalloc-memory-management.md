@@ -562,14 +562,3 @@ purged                0       0       0    2097152
 5.4.0 做了前端和页级分配边界的重构，部分旧函数位置和抽象已经变化，例如旧的 PAI vtable 分派已被直接 PAC/HPA 调用替代。读源码时应固定 tag 或 commit，不要把旧版本文章里的函数图直接贴到当前版本上。
 
 一句话收束：**jemalloc 用大小类降低对象管理复杂度，用 tcache 和 arena 降低同步成本，用 slab 和 extent 组织复用，再通过 decay 在“尽快归还物理页”和“保留资源供下一次快速使用”之间做权衡。** `free` 只完成这条链的起点，而不是承诺链上所有回收工作已经结束。
-
-## 参考资料
-
-- [jemalloc 官方仓库，5.4.0 发布 tag](https://github.com/jemalloc/jemalloc/tree/5.4.0)
-- [jemalloc 5.4.0 发布说明：自适应 tcache、pinned extent 与内部重构](https://github.com/jemalloc/jemalloc/releases/tag/5.4.0)
-- [本文固定的源码提交：7a34f18502e7b222724097cdcd499b437d189acc](https://github.com/jemalloc/jemalloc/commit/7a34f18502e7b222724097cdcd499b437d189acc)
-- [5.4.0 手册源文件：实现说明、mallocx、mallctl、extent hooks 与统计口径](https://github.com/jemalloc/jemalloc/blob/5.4.0/doc/jemalloc.xml.in)
-- [jemalloc 在线手册：Implementation Notes、Tuning 和 Mallctl Namespace](https://jemalloc.net/jemalloc.3.html)
-- [5.4.0 内部头文件入口：下级 internal 目录包含 sc、cache_bin、tcache_ncached_target、edata 和 rtree](https://github.com/jemalloc/jemalloc/tree/5.4.0/include/jemalloc)
-- [5.4.0 核心实现目录：arena、bin、tcache、large、PA/PAC、extent 和 pages](https://github.com/jemalloc/jemalloc/tree/5.4.0/src)
-- [5.4.0 单元测试：大小类、位图、tcache 自适应目标和 decay 的边界行为](https://github.com/jemalloc/jemalloc/tree/5.4.0/test/unit)
