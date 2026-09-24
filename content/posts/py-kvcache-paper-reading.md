@@ -1,5 +1,5 @@
 ---
-title: "py-kvcache论文阅读"
+title: "论文阅读A Performance Characterization of External KV Caching for vLLM with NVMe SSDs"
 date: 2026-09-24T22:13:00+08:00
 draft: false
 description: "结合论文与开源实现，分析外部 KV Cache 的成本、预加载时机和内存预算，用独立算例说明缓存命中为什么不一定值得加载。"
