@@ -1,5 +1,5 @@
 ---
-title: "[SolidAttention论文阅读: 在小显存电脑上用 SSD 承接长上下文]"
+title: "SolidAttention论文阅读: 在小显存电脑上用 SSD 承接长上下文"
 date: 2026-10-12T09:50:03+08:00
 draft: false
 description: "详读 FAST '26 SolidAttention：动态稀疏 KV 选择、K/V 交错、预测预取、DAG 调度及共享 SSD 下的性能边界。"

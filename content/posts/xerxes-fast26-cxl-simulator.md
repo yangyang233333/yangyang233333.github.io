@@ -1,5 +1,5 @@
 ---
-title: "[Xerxes论文阅读: 用仿真看 CXL 拓扑与设备侧一致性]"
+title: "Xerxes论文阅读: 用仿真看 CXL 拓扑与设备侧一致性"
 date: 2026-10-12T09:50:06+08:00
 draft: false
 description: "详读 FAST '26 Xerxes：PBR 图式互连、DMC 反向失效、端口争用、全双工收益和 CXL 2.0 实测校准边界。"

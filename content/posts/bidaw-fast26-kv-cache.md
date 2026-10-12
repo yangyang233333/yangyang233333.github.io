@@ -1,5 +1,5 @@
 ---
-title: "[Bidaw论文阅读: 让计算与两级 KV 存储互相感知]"
+title: "Bidaw论文阅读: 让计算与两级 KV 存储互相感知"
 date: 2026-10-12T09:50:01+08:00
 draft: false
 description: "详读 FAST '26 Bidaw：双队列与 disk-HRRN 调度、回答长度驱动的淘汰、存储高效张量和两类对话轨迹的实验边界。"

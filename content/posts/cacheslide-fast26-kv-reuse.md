@@ -1,5 +1,5 @@
 ---
-title: "[CacheSlide论文阅读: 位置变了，KV Cache 还能复用吗]"
+title: "CacheSlide论文阅读: 位置变了，KV Cache 还能复用吗"
 date: 2026-10-12T09:50:02+08:00
 draft: false
 description: "详读 FAST '26 CacheSlide：RPDC、位置漂移、CCPE 与注意力修正，以及 SLIDE 对 SSD 脏页的管理。"

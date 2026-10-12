@@ -1,5 +1,5 @@
 ---
-title: "[AITURBO论文阅读: 把 AI 任务的群组 I/O 交给存储层]"
+title: "AITURBO论文阅读: 把 AI 任务的群组 I/O 交给存储层"
 date: 2026-10-12T09:50:04+08:00
 draft: false
 description: "详读 FAST '26 AITURBO：群组读写与双网络数据计划、检查点持久化语义，以及 Mooncake 的 KV Cache 读实验。"

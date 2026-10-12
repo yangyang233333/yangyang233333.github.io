@@ -1,5 +1,5 @@
 ---
-title: "[Cylon论文阅读: 怎样真实模拟 CXL-SSD 的快命中与慢缺失]"
+title: "Cylon论文阅读: 怎样真实模拟 CXL-SSD 的快命中与慢缺失"
 date: 2026-10-12T09:50:05+08:00
 draft: false
 description: "详读 FAST '26 Cylon：EPT 直通与缺失陷入、共享页表更新、原型机对照和宿主 DRAM 后端的仿真边界。"
