@@ -26,6 +26,10 @@ FAST '26 的 *Fast Cloud Storage for AI Jobs via Grouped I/O API with Transparen
 数据面：各节点依照计划传输，不逐块经过控制器
 ```
 
+![AITURBO 架构：读写规划器、暂存 DRAM 与计算和存储双网络](https://yangyang233333.github.io/images/fast26/aiturbo-architecture-fig8.png)
+
+*论文图 8：计算节点内的读写规划器和缓冲区，与计算网络、存储网络协同传输。截图来自 AITURBO 官方 PDF 第 7 页，版权归原作者。*
+
 这里的“借路”有前提：计算网络必须有余量，缓冲区也得可用。论文指出某些推荐模型推理工作负载可能把主机 DRAM 用满，AITURBO 因而瞄准的是具备可用资源的 AI 任务，而不是白白创造了新的物理带宽。
 
 ## Grouped I/O 把哪些知识交给了存储层

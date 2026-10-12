@@ -24,6 +24,10 @@ FAST '26 论文 *Xerxes: Extensive Exploration of Scalable Hardware Systems with
         内存端点跟踪共享者、必要时主动发失效消息
 ```
 
+![Xerxes 架构：互连层、设备层、请求者和 snoop filter](https://yangyang233333.github.io/images/fast26/xerxes-architecture-fig3.png)
+
+*论文图 3：互连层负责路由和链路，设备层模拟请求者、端点及一致性目录。截图来自 Xerxes 官方 PDF 第 6 页，版权归原作者。*
+
 因此它不仅能画出链、树、环、spine-leaf 和全连接拓扑，还能在这些结构上模拟设备之间的流量会在哪个端口排队。高连接度不是免费的，但至少可以先用统一的链路参数，把单个中心端口到底限制了多少吞吐量量出来。
 
 模拟里一个“请求者”除了发读写，还要带着排队深度、地址交错规则和本地缓存的一致性状态；链路也不能只填一个固定 RTT。Xerxes 可以接入 DRAMsim3 模拟内存端点，并与 gem5 的处理器、SimpleSSD 的设备模型对接。独立互连层的意义就在这里：换一种存储设备或 CPU 模型，不应被迫再写一套交换机路由逻辑。

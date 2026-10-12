@@ -29,6 +29,10 @@ SSD：完整历史 KV ──按层、按块存放──┐
 
 这也解释了“动态”和“稀疏”为什么缺一不可：静态稀疏一旦提前删除旧 KV，下一轮选块不可能补救；动态选块则保存所有数据，允许新的 query 改变热点。代价是每层都要存储并遍历较小的块代表，以及为当次真正需要的块付出 I/O。SSD 在这里承担**完整历史的容量**，GPU/DRAM 只为当前层留下相对有限的工作窗口。
 
+![SolidAttention 系统架构：KV 整理、预测预取与 SSD 感知调度](https://yangyang233333.github.io/images/fast26/solidattention-architecture-fig3.png)
+
+*论文图 3：块选择、预测预取和 SSD 感知调度共同管理 SSD、DRAM 与 GPU 间的 KV 数据流。截图来自 SolidAttention 官方 PDF 第 5 页，版权归原作者。*
+
 ## 为什么把 K、V 交错放在一起
 
 GPU 读 KV 可以很细，SSD 却更喜欢较大的连续传输。粗暴扩大每块的 token 数，虽然减少 I/O 次数，却会让一个代表向量概括太多内容，长文检索的召回可能下降。
