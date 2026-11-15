@@ -31,137 +31,7 @@ description: "整理 SPDK 26.01 官方测试数据，对比 SPDK、io_uring 和 
 
 **SSD 预处理：** 每次测试前，以 128 KiB 块顺序写满整个命名空间两遍；4 KiB 纯随机写测试先运行 60 分钟，使性能进入稳态。
 
-## 2. SPDK 块设备层简介
-
-### 2.1 SPDK 轮询模式驱动
-
-NVMe PCIe 驱动通常是操作系统内核的一部分，应用程序通过系统调用与之交互。SPDK 采用了不同的方法：它将 NVMe 设备从内核 NVMe 驱动解绑，转而将其绑定到用户态 NVMe 驱动。这使用户态应用程序能够直接访问设备及其队列。
-
-SPDK NVMe 驱动是一个可以直接链接到应用程序中的 C 库，用于与 NVMe SSD 之间进行直接、零拷贝的数据传输。它是完全被动的：不创建任何线程，仅在响应应用程序的函数调用时执行工作。该库通过将 PCI BAR 映射到本地进程并执行 MMIO 操作来控制 NVMe 设备。SPDK NVMe 驱动也是异步的。它将 I/O 请求作为一个 NVMe 提交队列条目提交，并在命令完成之前立即返回。随后，应用程序必须对每个具有未完成 I/O 的队列对轮询完成事件，才能接收到完成回调。
-
-### 2.2 SPDK 块设备层
-
-SPDK 还以用户态库的形式提供完整的块存储栈，执行许多与操作系统块存储栈相同的功能。SPDK 块设备层通常称为 bdev，是一个 C 库，旨在成为传统内核存储栈中位于设备驱动之上的块存储层的用户态等价实现。
-
-bdev 模块提供了一个抽象层，为不同类型的块存储设备提供通用 API。应用程序可以使用这些 API 枚举并认领 SPDK 块设备，然后执行读、写和 unmap 等异步 I/O 操作，而无须知道底层设备是本地 NVMe SSD、Ceph RBD 设备，还是由 malloc 内存支持的 RAM 磁盘。SPDK NVMe bdev 模块既可以为本地 PCIe 连接的 NVMe 设备创建块设备，也可以为通过 NVMe-oF 导出的远程设备创建块设备。
-
-在本报告中，我们对本地 PCIe 连接的 NVMe 设备所使用的 bdev 层的性能与效率进行了基准测试。我们还通过多种工作负载展示了 SPDK 方法的优势，包括用户态轮询、异步 I/O，以及减少上下文切换开销。
-
-### 2.3 FIO 集成
-
-SPDK 提供了一个 fio 插件，用于与 Flexible I/O 基准测试工具集成。为本地连接的 PCIe NVMe bdev 生成配置文件的最快方法，是使用 `gen_nvme.sh` 脚本及其 `--json-with-subsystems` 选项，如图 1 所示。
-
-```text
-[user@localhost spdk]$ sudo scripts/gen_nvme.sh --json-withsubsystems | jq
-{
-  "subsystems": [
-    {
-      "subsystem": "bdev",
-      "config": [
-        {
-          "method": "bdev_set_options",
-          "params": {
-            "bdev_io_pool_size": 65535,
-            "bdev_io_cache_size": 2048,
-            "bdev_auto_examine": true
-          }
-        },
-        {
-          "method": "bdev_nvme_attach_controller",
-          "params": {
-            "trtype": "PCIe",
-            "name": "Nvme0",
-            "traddr": "0000:1a:00.0"
-          }
-        },
-        [...]
-        {
-          "method": "bdev_nvme_attach_controller",
-          "params": {
-            "trtype": "PCIe",
-            "name": "Nvme23",
-            "traddr": "0000:df:00.0"
-          }
-        }
-      ]
-    }
-  ]
-```
-
-**图 1：NVMe bdev 配置文件示例**
-
-通过设置 `ioengine=spdk_bdev`，并添加值指向 NVMe bdev 配置文件的 `spdk_json_conf` 参数，将 SPDK bdev 加入 fio 作业文件。
-
-图 2 中的 fio 配置文件示例展示了如何定义多个 fio 作业，并为每个作业分配 NVMe bdev。每个作业还绑定到一个 CPU 核心，该核心与该作业将访问的 NVMe SSD 位于同一个 NUMA 节点上。
-
-最后，要使用 bdev fio 插件，请在运行 fio 时指定 `LD_PRELOAD`。
-
-```text
-LD_PRELOAD=<path to spdk repo>/build/fio/spdk_bdev fio <fio job file>
-```
-
-占位符说明：`<path to spdk repo>` 为“SPDK 仓库路径”；`<fio job file>` 为“fio 作业文件”。
-
-```ini
-[global]
-direct=1
-thread=1
-time_based=1
-norandommap=1
-group_reporting=1
-ioengine=spdk_bdev
-spdk_json_conf=/tmp/bdev.conf
-rw=randread
-rwmixread=70
-bs=4096
-numjobs=1
-runtime=300
-ramp_time=60
-
-[filename0]
-iodepth=192
-cpus_allowed=16
-filename=Nvme0n1
-filename=Nvme4n1
-filename=Nvme8n1
-filename=Nvme12n1
-filename=Nvme16n1
-filename=Nvme20n1
-
-[filename1]
-iodepth=192
-cpus_allowed=32
-filename=Nvme1n1
-filename=Nvme5n1
-filename=Nvme9n1
-filename=Nvme13n1
-filename=Nvme17n1
-filename=Nvme21n1
-
-[filename2]
-iodepth=192
-cpus_allowed=80
-filename=Nvme2n1
-filename=Nvme10n1
-filename=Nvme11n1
-filename=Nvme14n1
-filename=Nvme18n1
-filename=Nvme22n1
-
-[filename3]
-iodepth=192
-cpus_allowed=112
-filename=Nvme3n1
-filename=Nvme7n1
-filename=Nvme11n1
-filename=Nvme15n1
-filename=Nvme19n1
-filename=Nvme23n1
-```
-
-**图 2：SPDK Fio BDEV 配置文件示例**
-
-## 3. 测试用例 1：SPDK NVMe BDEV 每核 IOPS 测试
+## 2. 测试用例 1：SPDK NVMe BDEV 每核 IOPS 测试
 
 **目的：** 本测试用例测量 SPDK NVMe bdev 层的最大单核 IOPS。
 我们使用不同的基准测试工具（SPDK bdevperf、SPDK fio bdev 插件和 SPDK NVMe perf），以了解基准测试工具本身引入的开销。由于本测试关注每核 IOPS，因此关闭或省略了延迟测量。
@@ -226,13 +96,13 @@ rwmixread=0
 iodepth={32,64,128}
 ```
 
-### 3.1 SPDK NVMe BDEV 单核吞吐量
+### 2.1 SPDK NVMe BDEV 单核吞吐量
 
 第一项测试使用 SPDK bdevperf 执行，它是一个轻量级基准测试工具，给 I/O 路径增加的延迟极小。下列图表展示了随着 NVMe SSD 数量增加，SPDK 块层的单核 IOPS 结果。
 
-![图 3：SPDK NVMe BDEV IOPS 随 SSD 数量增加的扩展性（4KiB 随机读，1 个 CPU 核心，QD=192，使用 bdevperf 工具）](figure-03.png)
+![图 1：SPDK NVMe BDEV IOPS 随 SSD 数量增加的扩展性（4KiB 随机读，1 个 CPU 核心，QD=192，使用 bdevperf 工具）](figure-03.png)
 
-**图 3：SPDK NVMe BDEV IOPS 随 SSD 数量增加的扩展性（4KiB 随机读，1 个 CPU 核心，QD=192，使用 bdevperf 工具）**
+**图 1：SPDK NVMe BDEV IOPS 随 SSD 数量增加的扩展性（4KiB 随机读，1 个 CPU 核心，QD=192，使用 bdevperf 工具）**
 
 **图示说明：**
 
@@ -241,9 +111,9 @@ iodepth={32,64,128}
 - 纵轴：IOPS（千），越高越好。
 - 横轴：SSD 数量。
 
-![图 4：SPDK NVMe BDEV IOPS 随 SSD 数量增加的扩展性（4KiB 随机写，1 个 CPU 核心，QD=32，使用 bdevperf 工具）](figure-04.png)
+![图 2：SPDK NVMe BDEV IOPS 随 SSD 数量增加的扩展性（4KiB 随机写，1 个 CPU 核心，QD=32，使用 bdevperf 工具）](figure-04.png)
 
-**图 4：SPDK NVMe BDEV IOPS 随 SSD 数量增加的扩展性（4KiB 随机写，1 个 CPU 核心，QD=32，使用 bdevperf 工具）**
+**图 2：SPDK NVMe BDEV IOPS 随 SSD 数量增加的扩展性（4KiB 随机写，1 个 CPU 核心，QD=32，使用 bdevperf 工具）**
 
 **图示说明：**
 
@@ -252,9 +122,9 @@ iodepth={32,64,128}
 - 纵轴：IOPS（千），越高越好。
 - 横轴：SSD 数量。
 
-![图 5：SPDK NVMe BDEV IOPS 随 SSD 数量增加的扩展性（4KiB 70/30 随机读/写，1 个 CPU 核心，QD=192，使用 bdevperf 工具）](figure-05.png)
+![图 3：SPDK NVMe BDEV IOPS 随 SSD 数量增加的扩展性（4KiB 70/30 随机读/写，1 个 CPU 核心，QD=192，使用 bdevperf 工具）](figure-05.png)
 
-**图 5：SPDK NVMe BDEV IOPS 随 SSD 数量增加的扩展性（4KiB 70/30 随机读/写，1 个 CPU 核心，QD=192，使用 bdevperf 工具）**
+**图 3：SPDK NVMe BDEV IOPS 随 SSD 数量增加的扩展性（4KiB 70/30 随机读/写，1 个 CPU 核心，QD=192，使用 bdevperf 工具）**
 
 **图示说明：**
 
@@ -263,7 +133,7 @@ iodepth={32,64,128}
 - 纵轴：IOPS（千），越高越好。
 - 横轴：SSD 数量。
 
-### 3.2 Bdevperf 与 fio 的每核 IOPS 结果对比
+### 2.2 Bdevperf 与 fio 的每核 IOPS 结果对比
 
 SPDK 提供了 bdevperf 基准测试工具，该工具仅包含定义基本工作负载和收集有限指标所需的最少功能。fio 在定义工作负载、扩展测试和收集详细性能数据方面提供了丰富得多的功能，但这种灵活性带来了更高的开销。本测试比较了 bdevperf 与使用 SPDK bdev 插件的 fio 的每核 IOPS。
 
@@ -277,7 +147,7 @@ SPDK 提供了 bdevperf 基准测试工具，该工具仅包含定义基本工�
 
 当被测系统每核能够提供数百万 IOPS 时，基准测试开销就十分重要。在此环境中，开销较低的 SPDK bdevperf 工具提供的每核 IOPS 比 fio 最多高 83%。
 
-### 3.3 NVMe BDEV 与轮询模式驱动的每核 IOPS 对比
+### 2.3 NVMe BDEV 与轮询模式驱动的每核 IOPS 对比
 
 这部分测试比较了 SPDK NVMe bdev 层与 SPDK NVMe 轮询模式驱动的吞吐量。SPDK 块层提供了额外功能，但这些功能引入了可测量的开销。对于随机读工作负载，bdev 层提供的每核 IOPS 比更底层的轮询模式驱动低约 58%。对于随机写工作负载，差距则小得多。该比较使用 SPDK bdevperf 和 nvmeperf 执行。
 
@@ -288,14 +158,14 @@ SPDK 提供了 bdevperf 基准测试工具，该工具仅包含定义基本工�
 | 4KiB 随机读，QD=256，8 块 SSD | 11,467.53 | 18,115.95 | 58% |
 | 4KiB 随机写，QD=32，24 块 SSD | 10,122.57 | 10,460.22 | 3% |
 
-### 3.4 结论
+### 2.4 结论
 
 1. 对于随机读工作负载，与使用 SPDK NVMe 块设备模块相比，SPDK NVMe 轮询模式驱动提供的 IOPS 高 58%。
 2. 对于随机读工作负载，在 NVMe SSD 数量增加到 3 块之前，性能呈线性扩展，达到约 700 万 IOPS。在此之后，扩展变为非线性，并在使用 13 块 SSD 时达到约 1180 万 IOPS 的峰值。
 3. 对于随机写工作负载，性能一直线性扩展至 24 块 NVMe SSD，达到约 1010 万 IOPS。
 4. 对于 70/30 随机读/写工作负载，性能一直线性扩展至 12 块 SSD，达到约 1080 万 IOPS。
 
-## 4. 测试用例 2：SPDK NVMe BDEV I/O 核心数扩展
+## 3. 测试用例 2：SPDK NVMe BDEV I/O 核心数扩展
 
 **目的：** 本测试用例展示了为 I/O 处理分配更多 CPU 核心时，NVMe bdev 吞吐量如何扩展。
 测试中使用的 CPU 核心数从 1 增加到 2、3、4、5、6、8、10 和 12。
@@ -321,7 +191,7 @@ spdk/build/examples/bdevperf --json bdev.conf \
     -t 300 -m ${CORE_MASK} -p ${PRIMARY_CORE}
 ```
 
-### 4.1 结果
+### 3.1 结果
 
 **表 6：SPDK NVMe BDEV I/O 核心数扩展性测试（QD=192 时的 4KiB 100% 随机读 IOPS；QD=32 时的 4KiB 100% 随机写 IOPS；QD=192 时的 4KiB 70/30 随机读/写 IOPS）**
 
@@ -339,9 +209,9 @@ IOPS 单位：千。
 | 10 | 24 | 56,218.37 | N/A | 52,799.65 |
 | 12 | 24 | 57,819.93 | N/A | 53,847.02 |
 
-![图 6：SPDK NVMe BDEV I/O 核心数扩展性（QD=192 时的 4KiB 100% 随机读 IOPS；QD=32 时的 4KiB 100% 随机写 IOPS；QD=192 时的 4KiB 70/30 随机读/写 IOPS）](figure-06.png)
+![图 4：SPDK NVMe BDEV I/O 核心数扩展性（QD=192 时的 4KiB 100% 随机读 IOPS；QD=32 时的 4KiB 100% 随机写 IOPS；QD=192 时的 4KiB 70/30 随机读/写 IOPS）](figure-06.png)
 
-**图 6：SPDK NVMe BDEV I/O 核心数扩展性（QD=192 时的 4KiB 100% 随机读 IOPS；QD=32 时的 4KiB 100% 随机写 IOPS；QD=192 时的 4KiB 70/30 随机读/写 IOPS）**
+**图 4：SPDK NVMe BDEV I/O 核心数扩展性（QD=192 时的 4KiB 100% 随机读 IOPS；QD=32 时的 4KiB 100% 随机写 IOPS；QD=192 时的 4KiB 70/30 随机读/写 IOPS）**
 
 **图示说明：**
 
@@ -350,14 +220,14 @@ IOPS 单位：千。
 - 横轴：使用的 CPU 核心数。
 - 图例：随机读，QD=192；随机写，QD=32；70/30 随机读/写，QD=192。
 
-### 4.2 结论
+### 3.2 结论
 
 1. 对于 4 KiB 随机读工作负载，当 I/O 核心数增加到 3 个 CPU 核心之前，IOPS 几乎呈线性扩展。超过 3 个核心之后，扩展变为非线性，并在使用 12 个 CPU 核心时达到 5782 万 IOPS 的峰值，这接近此测试环境的理论最大值。
    - a. 当我们将 bdevperf 的 I/O 线程绑定到 SSD 邻近的本地 CPU 核心时，在 6、8 和 10 个 I/O 核心的情况下，IOPS 吞吐量提升了 5–6%。
 2. 对于 4 KiB 70/30 随机读/写工作负载，IOPS 在增加到 4 个 I/O 核心之前几乎呈线性扩展。超过 4 个核心之后，扩展变为非线性，并在使用 12 个 CPU 核心时达到 5385 万 IOPS 的峰值。该结果超出了这些 NVMe SSD 在此工作负载下的预期吞吐量；我们怀疑这是由于预处理不完善所致，其影响会随时间推移逐渐消退。不过，这些结果是可重复的，仍然展示了 SPDK 在 I/O 核心数增加时的强大扩展性。
 3. 对于 4 KiB 随机写工作负载，IOPS 在增加到 3 个 CPU 核心之前呈线性扩展，并达到约 1050 万 IOPS 的峰值。吞吐量受到 NVMe SSD 而非 CPU 核心的限制。因此，增加 I/O 核心并未提高 IOPS。
 
-## 5. 测试用例 3：SPDK NVMe BDEV 延迟
+## 4. 测试用例 3：SPDK NVMe BDEV 延迟
 
 本测试用例考察 SPDK NVMe bdev 层的延迟特征，并将其与 Linux 内核 NVMe 块层进行比较。我们使用 SPDK fio bdev 插件而不是 bdevperf，因为它提供更详细的延迟指标。fio 针对一块 NVMe 驱动器上的单个块设备运行了 15 分钟。目标是使用直方图和汇总指标比较延迟随时间变化的一致性。Linux 内核块层也提供 I/O 轮询，以减少上下文切换、中断传递延迟和中断处理程序调度等开销。因此，本节比较了 SPDK、Linux libaio，以及启用轮询的 Linux io_uring 的延迟。
 
@@ -443,9 +313,9 @@ sqthread_poll=1
 
 Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切换开销、IRQ 传递开销以及 IRQ 处理程序调度开销。
 
-![图 7：通过轮询优化 Linux 块层 I/O。](figure-07.png)
+![图 5：通过轮询优化 Linux 块层 I/O。](figure-07.png)
 
-**图 7：通过轮询优化 Linux 块层 I/O。**
+**图 5：通过轮询优化 Linux 块层 I/O。**
 
 **图示说明：**
 
@@ -467,9 +337,9 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 
 此外，Linux 块 I/O 轮询提供了一种降低 CPU 负载的机制。在经典轮询模型中，CPU 自旋等待命令完成，并占用一个 CPU 核心 100% 的资源。还存在一种自适应混合轮询，它让 I/O 轮询线程睡眠约为命令执行时间一半的时长，从而降低 CPU 负载；但必须在 I/O 完成之前提前唤醒轮询线程，并预留足够的上下文切换时间。本文档的测试没有使用混合轮询模式。
 
-![图 8：Linux 块 I/O 经典轮询与混合轮询的延迟分解。](figure-08.png)
+![图 6：Linux 块 I/O 经典轮询与混合轮询的延迟分解。](figure-08.png)
 
-**图 8：Linux 块 I/O 经典轮询与混合轮询的延迟分解。**
+**图 6：Linux 块 I/O 经典轮询与混合轮询的延迟分解。**
 
 **图示说明：**
 
@@ -492,7 +362,7 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 
 表格和图表中的数据比较了使用 SPDK bdev，与使用 Linux 块层 I/O 模型 libaio 和启用轮询模式的 io_uring 执行各种 4KiB 工作负载时的 I/O 延迟。
 
-### 5.1 平均延迟与尾延迟对比
+### 4.1 平均延迟与尾延迟对比
 
 **表 8：SPDK bdev 与 Linux 内核延迟对比（4KiB 随机读，QD=1，运行时间=900s）**
 
@@ -518,9 +388,9 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 | 平均提交延迟 | 0.11 | 0.82 | 0.00 |
 | 平均完成延迟 | 9.31 | 11.25 | 10.75 |
 
-![图 9：SPDK bdev 与 Linux 内核延迟对比（4KiB 随机读）](figure-09.png)
+![图 7：SPDK bdev 与 Linux 内核延迟对比（4KiB 随机读）](figure-09.png)
 
-**图 9：SPDK bdev 与 Linux 内核延迟对比（4KiB 随机读）**
+**图 7：SPDK bdev 与 Linux 内核延迟对比（4KiB 随机读）**
 
 **图示说明：**
 
@@ -528,9 +398,9 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 - 分类：Linux 内核（io_uring）；Linux 内核（libaio）；SPDK Fio BDEV 插件。
 - 图例：P99.99；P99；P90；平均值。
 
-![图 10：SPDK bdev 与 Linux 内核延迟对比（4KiB 随机写）](figure-10.png)
+![图 8：SPDK bdev 与 Linux 内核延迟对比（4KiB 随机写）](figure-10.png)
 
-**图 10：SPDK bdev 与 Linux 内核延迟对比（4KiB 随机写）**
+**图 8：SPDK bdev 与 Linux 内核延迟对比（4KiB 随机写）**
 
 **图示说明：**
 
@@ -538,11 +408,11 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 - 分类：Linux 内核（io_uring）；Linux 内核（libaio）；SPDK Fio BDEV 插件。
 - 图例：P99.99；P99；P90；平均值。
 
-### 5.2 Linux 内核 libaio 直方图
+### 4.2 Linux 内核 libaio 直方图
 
-![图 11：Linux 内核（默认 libaio）4KiB 随机读平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）](figure-11.png)
+![图 9：Linux 内核（默认 libaio）4KiB 随机读平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）](figure-11.png)
 
-**图 11：Linux 内核（默认 libaio）4KiB 随机读平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）**
+**图 9：Linux 内核（默认 libaio）4KiB 随机读平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）**
 
 **图示说明：**
 
@@ -551,9 +421,9 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 - 纵轴：频数。
 - 横轴：延迟（纳秒）。
 
-![图 12：Linux 内核（默认 libaio）4KiB 随机写平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）](figure-12.png)
+![图 10：Linux 内核（默认 libaio）4KiB 随机写平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）](figure-12.png)
 
-**图 12：Linux 内核（默认 libaio）4KiB 随机写平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）**
+**图 10：Linux 内核（默认 libaio）4KiB 随机写平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）**
 
 **图示说明：**
 
@@ -562,11 +432,11 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 - 纵轴：频数。
 - 横轴：延迟（纳秒）。
 
-### 5.3 Linux 内核 io_uring 直方图
+### 4.3 Linux 内核 io_uring 直方图
 
-![图 13：Linux 内核（io_uring 轮询）4KiB 随机读平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）](figure-13.png)
+![图 11：Linux 内核（io_uring 轮询）4KiB 随机读平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）](figure-13.png)
 
-**图 13：Linux 内核（io_uring 轮询）4KiB 随机读平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）**
+**图 11：Linux 内核（io_uring 轮询）4KiB 随机读平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）**
 
 **图示说明：**
 
@@ -575,9 +445,9 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 - 纵轴：频数。
 - 横轴：延迟（纳秒）。
 
-![图 14：Linux 内核（io_uring 轮询）4KiB 随机写平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）](figure-14.png)
+![图 12：Linux 内核（io_uring 轮询）4KiB 随机写平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）](figure-14.png)
 
-**图 14：Linux 内核（io_uring 轮询）4KiB 随机写平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）**
+**图 12：Linux 内核（io_uring 轮询）4KiB 随机写平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）**
 
 **图示说明：**
 
@@ -586,11 +456,11 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 - 纵轴：频数。
 - 横轴：延迟（纳秒）。
 
-### 5.4 SPDK fio Bdev 直方图
+### 4.4 SPDK fio Bdev 直方图
 
-![图 15：SPDK BDEV NVMe 4KiB 随机读平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）](figure-15.png)
+![图 13：SPDK BDEV NVMe 4KiB 随机读平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）](figure-15.png)
 
-**图 15：SPDK BDEV NVMe 4KiB 随机读平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）**
+**图 13：SPDK BDEV NVMe 4KiB 随机读平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）**
 
 **图示说明：**
 
@@ -599,9 +469,9 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 - 纵轴：频数。
 - 横轴：延迟（纳秒）。
 
-![图 16：SPDK BDEV NVMe 4KiB 随机写平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）](figure-16.png)
+![图 14：SPDK BDEV NVMe 4KiB 随机写平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）](figure-16.png)
 
-**图 16：SPDK BDEV NVMe 4KiB 随机写平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）**
+**图 14：SPDK BDEV NVMe 4KiB 随机写平均延迟直方图（QD=1，运行时间=900s，fio，采样间隔=15msec）**
 
 **图示说明：**
 
@@ -610,7 +480,7 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 - 纵轴：频数。
 - 横轴：延迟（纳秒）。
 
-### 5.5 性能与不断增加的队列深度之间的关系
+### 4.5 性能与不断增加的队列深度之间的关系
 
 **目的：** 本节比较了在单个 NVMe SSD 上使用单个 CPU 核心、将队列深度从 1 增加到 512 时，SPDK、启用轮询的 Linux io_uring，以及 Linux libaio 的 IOPS 和平均延迟。
 
@@ -629,9 +499,9 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 | 256 | 2,455,507 | 104 | 595,430 | 430 | 1,987,999 | 129 |
 | 512 | 2,456,238 | 208 | 596,613 | 858 | 2,214,990 | 231 |
 
-![图 17：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机读，1 块 NVMe SSD，1 个 CPU 核心，numjobs=1）](figure-17.png)
+![图 15：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机读，1 块 NVMe SSD，1 个 CPU 核心，numjobs=1）](figure-17.png)
 
-**图 17：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机读，1 块 NVMe SSD，1 个 CPU 核心，numjobs=1）**
+**图 15：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机读，1 块 NVMe SSD，1 个 CPU 核心，numjobs=1）**
 
 **图示说明：**
 
@@ -657,9 +527,9 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 | 256 | 1,703,205 | 150 | 607,284 | 421 | 1,685,945 | 152 |
 | 512 | 1,708,936 | 299 | 600,026 | 853 | 1,698,960 | 301 |
 
-![图 18：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机写，1 块 NVMe SSD，1 个 CPU 核心，numjobs=1）](figure-18.png)
+![图 16：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机写，1 块 NVMe SSD，1 个 CPU 核心，numjobs=1）](figure-18.png)
 
-**图 18：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机写，1 块 NVMe SSD，1 个 CPU 核心，numjobs=1）**
+**图 16：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机写，1 块 NVMe SSD，1 个 CPU 核心，numjobs=1）**
 
 **图示说明：**
 
@@ -670,7 +540,7 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 - 横轴：队列深度。
 - 图例：SPDK IOPS；Linux 内核（libaio）IOPS；Linux 内核（io_uring 轮询）IOPS；SPDK 平均延迟（usec）；Linux 内核（libaio）平均延迟（usec）；Linux 内核（io_uring 轮询）平均延迟（usec）。
 
-### 5.6 结论
+### 4.6 结论
 
 1. 通过轮询完成事件而不是依赖中断，同时降低了延迟和延迟变化。
 2. 对于随机读和随机写，SPDK NVMe Bdev 的平均延迟分别比 Linux 内核 libaio 最多低 3.63% 和 21.98%。
@@ -683,7 +553,7 @@ Linux 块层在完成队列上实现 I/O 轮询。轮询能够消除上下文切
 6. 对于 4 KiB 随机写工作负载，libaio 在 QD 增加到 8 之前呈线性扩展，之后仅略有增加，最终在约 608k IOPS 时使 CPU 核心饱和。io_uring 和 SPDK 在 QD 增加到 16 之前呈线性扩展。超过这些点之后，随着 NVMe 驱动器在约 170 万 IOPS 时接近饱和，扩展变为非线性。
 7. 随机写工作负载的结果超过了该 NVMe SSD 的能力（约 437K IOPS），这可能是由不完善的预处理过程造成的，其影响会随时间推移逐渐消退。不过，这些结果是可重复的，并展示了 SPDK 随队列深度增加而具备的高扩展性。
 
-## 6. 测试用例 4：不同队列深度下的 IOPS 与延迟
+## 5. 测试用例 4：不同队列深度下的 IOPS 与延迟
 
 **目的：** 执行本测试用例是为了了解运行 SPDK 与内核 NVMe 块层时，不同队列深度下吞吐量与延迟之间的权衡。
 
@@ -795,7 +665,7 @@ registerfiles=1
 sqthread_poll=1
 ```
 
-### 6.1 4KiB 随机读结果
+### 5.1 4KiB 随机读结果
 
 **表 13：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机读，24 块 NVMe SSD，12 个 CPU 核心）**
 
@@ -812,9 +682,9 @@ sqthread_poll=1
 | 256 | 52.27 | 114.02 | 6.54 | 938.99 | 23.26 | 264.07 |
 | 512 | 50.61 | 238.70 | 6.58 | 1,867.14 | 21.83 | 562.79 |
 
-![图 19：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机读，24 块 NVMe SSD，12 个 CPU 核心）](figure-19.png)
+![图 17：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机读，24 块 NVMe SSD，12 个 CPU 核心）](figure-19.png)
 
-**图 19：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机读，24 块 NVMe SSD，12 个 CPU 核心）**
+**图 17：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机读，24 块 NVMe SSD，12 个 CPU 核心）**
 
 **图示说明：**
 
@@ -825,7 +695,7 @@ sqthread_poll=1
 - 图例：SPDK Fio Bdev IOPS；Linux 内核（libaio）；Linux 内核（io_uring 轮询）。
 - 数据点标注：QD=32、QD=64、QD=128、QD=256、QD=512；即对应的队列深度。
 
-### 6.2 4KiB 随机写结果
+### 5.2 4KiB 随机写结果
 
 **表 14：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机写，24 块 NVMe SSD，12 个 CPU 核心）**
 
@@ -842,9 +712,9 @@ sqthread_poll=1
 | 256 | 36.99 | 163.76 | 6.45 | 952.59 | 18.08 | 340.00 |
 | 512 | 36.17 | 323.39 | 6.32 | 1,944.09 | 15.96 | 769.84 |
 
-![图 20：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机写，24 块 NVMe SSD，12 个 CPU 核心）。](figure-20.png)
+![图 18：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机写，24 块 NVMe SSD，12 个 CPU 核心）。](figure-20.png)
 
-**图 20：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机写，24 块 NVMe SSD，12 个 CPU 核心）。**
+**图 18：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 随机写，24 块 NVMe SSD，12 个 CPU 核心）。**
 
 **图示说明：**
 
@@ -855,7 +725,7 @@ sqthread_poll=1
 - 图例：SPDK Fio Bdev IOPS；Linux 内核（libaio）IOPS；Linux 内核（io_uring 轮询）IOPS。
 - 数据点标注：QD=16、QD=32、QD=64、QD=128、QD=256；即对应的队列深度。
 
-### 6.3 4KiB 随机 70%/30% 读/写结果
+### 5.3 4KiB 随机 70%/30% 读/写结果
 
 **表 15：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 70/30 随机读/写，24 块 NVMe SSD，12 个 CPU 核心）**
 
@@ -872,9 +742,9 @@ sqthread_poll=1
 | 256 | 37.36 | 160.87 | 6.39 | 961.79 | 17.56 | 349.88 |
 | 512 | 40.15 | 301.00 | 6.38 | 1,925.52 | 16.97 | 724.06 |
 
-![图 21：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 70/30 随机读/写，24 块 NVMe SSD，12 个 CPU 核心）](figure-21.png)
+![图 19：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 70/30 随机读/写，24 块 NVMe SSD，12 个 CPU 核心）](figure-21.png)
 
-**图 21：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 70/30 随机读/写，24 块 NVMe SSD，12 个 CPU 核心）**
+**图 19：队列深度增加时的性能；SPDK NVMe BDEV、Linux 默认 libaio 与 Linux io_uring 轮询对比（4KiB 70/30 随机读/写，24 块 NVMe SSD，12 个 CPU 核心）**
 
 **图示说明：**
 
@@ -885,7 +755,7 @@ sqthread_poll=1
 - 图例：SPDK Fio Bdev IOPS；Linux 内核（libaio）；Linux 内核（io_uring 轮询）。
 - 数据点标注：QD=32、QD=64、QD=128、QD=256、QD=512；即对应的队列深度。
 
-### 6.4 结论
+### 5.4 结论
 
 1. 对于随机读工作负载，SPDK NVMe BDEV fio 插件在 QD=256 时达到最高约 5227 万 IOPS。这低于测试用例 2 中使用 bdevperf 测得的 5782 万 IOPS，因为这项基于 fio 的测试被限制为使用 12 个 CPU 核心。
 2. 对于 4 KiB 随机写工作负载，SPDK NVMe bdev fio 插件的 IOPS 在 QD 增加到 8 之前几乎呈线性扩展。超过该点之后，扩展变为非线性，并在 QD=256 时达到 3699 万 IOPS 的峰值。
@@ -896,7 +766,7 @@ sqthread_poll=1
 5. Linux libaio 使用 12 个 CPU 核心达到最高约 650 万 IOPS，并未使平台的 NVMe 吞吐量饱和。随机读在 QD=32 时、随机写在 QD=8 时、70/30 随机读/写工作负载在 QD=32 时达到峰值性能。超过这些队列深度之后，IOPS 没有提高，但延迟增加了。
 6. Linux io_uring 的峰值性能为：随机读在 QD=256 时达到 2326 万 IOPS，随机写在 QD=128 时达到 1842 万 IOPS，70/30 随机读/写工作负载在 QD=256 时达到 1756 万 IOPS。测试期间，htop 显示 io_uring 总共使用了 24 个 CPU 核心：12 个用于 fio，12 个用于提交队列轮询。因此，我们测得 io_uring 的每核 IOPS 最高约为 97 万，而 SPDK NVMe bdev fio 插件的每核 IOPS 最高约为 436 万。《提交队列轮询》博客进一步介绍了 io_uring 如何在此模式下消除系统调用。
 
-## 7. 总结
+## 6. 总结
 
 1. 使用 SPDK bdevperf 基准测试工具的 SPDK NVMe BDEV 块层，在启用 Turbo Boost 的单个 AMD EPYC™ 9575F CPU 核心上，最多可提供 1180 万 IOPS。
 2. SPDK NVMe BDEV 的 IOPS 仅使用 6 个 CPU 核心就可扩展至 5009 万，使用 12 个 CPU 核心时最高可达 5782 万（启用 Turbo Boost 的 AMD EPYC™ 9575F CPU 核心）。
@@ -905,8 +775,138 @@ sqthread_poll=1
    - b. 与 Linux io_uring 相比，SPDK bdev 的随机读延迟约低 0.83%，随机写延迟约低 12.75%。
 4. SPDK NVMe BDEV Fio 在队列深度为 256、使用 12 个 CPU 核心时，最高达到 5227 万 IOPS，平均延迟约为 114 usec。在相同的 fio 工作负载下，Linux io_uring 实际使用 24 个核心（12 个 fio 线程加 12 个提交队列轮询线程）时，最高达到 2326 万 IOPS，而 Linux libaio 最高达到 658 万 IOPS。
 
+## 7. SPDK 块设备层简介
+
+### 7.1 SPDK 轮询模式驱动
+
+NVMe PCIe 驱动通常是操作系统内核的一部分，应用程序通过系统调用与之交互。SPDK 采用了不同的方法：它将 NVMe 设备从内核 NVMe 驱动解绑，转而将其绑定到用户态 NVMe 驱动。这使用户态应用程序能够直接访问设备及其队列。
+
+SPDK NVMe 驱动是一个可以直接链接到应用程序中的 C 库，用于与 NVMe SSD 之间进行直接、零拷贝的数据传输。它是完全被动的：不创建任何线程，仅在响应应用程序的函数调用时执行工作。该库通过将 PCI BAR 映射到本地进程并执行 MMIO 操作来控制 NVMe 设备。SPDK NVMe 驱动也是异步的。它将 I/O 请求作为一个 NVMe 提交队列条目提交，并在命令完成之前立即返回。随后，应用程序必须对每个具有未完成 I/O 的队列对轮询完成事件，才能接收到完成回调。
+
+### 7.2 SPDK 块设备层
+
+SPDK 还以用户态库的形式提供完整的块存储栈，执行许多与操作系统块存储栈相同的功能。SPDK 块设备层通常称为 bdev，是一个 C 库，旨在成为传统内核存储栈中位于设备驱动之上的块存储层的用户态等价实现。
+
+bdev 模块提供了一个抽象层，为不同类型的块存储设备提供通用 API。应用程序可以使用这些 API 枚举并认领 SPDK 块设备，然后执行读、写和 unmap 等异步 I/O 操作，而无须知道底层设备是本地 NVMe SSD、Ceph RBD 设备，还是由 malloc 内存支持的 RAM 磁盘。SPDK NVMe bdev 模块既可以为本地 PCIe 连接的 NVMe 设备创建块设备，也可以为通过 NVMe-oF 导出的远程设备创建块设备。
+
+在本报告中，我们对本地 PCIe 连接的 NVMe 设备所使用的 bdev 层的性能与效率进行了基准测试。我们还通过多种工作负载展示了 SPDK 方法的优势，包括用户态轮询、异步 I/O，以及减少上下文切换开销。
+
+### 7.3 FIO 集成
+
+SPDK 提供了一个 fio 插件，用于与 Flexible I/O 基准测试工具集成。为本地连接的 PCIe NVMe bdev 生成配置文件的最快方法，是使用 `gen_nvme.sh` 脚本及其 `--json-with-subsystems` 选项，如图 20 所示。
+
+```text
+[user@localhost spdk]$ sudo scripts/gen_nvme.sh --json-withsubsystems | jq
+{
+  "subsystems": [
+    {
+      "subsystem": "bdev",
+      "config": [
+        {
+          "method": "bdev_set_options",
+          "params": {
+            "bdev_io_pool_size": 65535,
+            "bdev_io_cache_size": 2048,
+            "bdev_auto_examine": true
+          }
+        },
+        {
+          "method": "bdev_nvme_attach_controller",
+          "params": {
+            "trtype": "PCIe",
+            "name": "Nvme0",
+            "traddr": "0000:1a:00.0"
+          }
+        },
+        [...]
+        {
+          "method": "bdev_nvme_attach_controller",
+          "params": {
+            "trtype": "PCIe",
+            "name": "Nvme23",
+            "traddr": "0000:df:00.0"
+          }
+        }
+      ]
+    }
+  ]
+```
+
+**图 20：NVMe bdev 配置文件示例**
+
+通过设置 `ioengine=spdk_bdev`，并添加值指向 NVMe bdev 配置文件的 `spdk_json_conf` 参数，将 SPDK bdev 加入 fio 作业文件。
+
+图 21 中的 fio 配置文件示例展示了如何定义多个 fio 作业，并为每个作业分配 NVMe bdev。每个作业还绑定到一个 CPU 核心，该核心与该作业将访问的 NVMe SSD 位于同一个 NUMA 节点上。
+
+最后，要使用 bdev fio 插件，请在运行 fio 时指定 `LD_PRELOAD`。
+
+```text
+LD_PRELOAD=<path to spdk repo>/build/fio/spdk_bdev fio <fio job file>
+```
+
+占位符说明：`<path to spdk repo>` 为“SPDK 仓库路径”；`<fio job file>` 为“fio 作业文件”。
+
+```ini
+[global]
+direct=1
+thread=1
+time_based=1
+norandommap=1
+group_reporting=1
+ioengine=spdk_bdev
+spdk_json_conf=/tmp/bdev.conf
+rw=randread
+rwmixread=70
+bs=4096
+numjobs=1
+runtime=300
+ramp_time=60
+
+[filename0]
+iodepth=192
+cpus_allowed=16
+filename=Nvme0n1
+filename=Nvme4n1
+filename=Nvme8n1
+filename=Nvme12n1
+filename=Nvme16n1
+filename=Nvme20n1
+
+[filename1]
+iodepth=192
+cpus_allowed=32
+filename=Nvme1n1
+filename=Nvme5n1
+filename=Nvme9n1
+filename=Nvme13n1
+filename=Nvme17n1
+filename=Nvme21n1
+
+[filename2]
+iodepth=192
+cpus_allowed=80
+filename=Nvme2n1
+filename=Nvme10n1
+filename=Nvme11n1
+filename=Nvme14n1
+filename=Nvme18n1
+filename=Nvme22n1
+
+[filename3]
+iodepth=192
+cpus_allowed=112
+filename=Nvme3n1
+filename=Nvme7n1
+filename=Nvme11n1
+filename=Nvme15n1
+filename=Nvme19n1
+filename=Nvme23n1
+```
+
+**图 21：SPDK Fio BDEV 配置文件示例**
+
 ## 参考资料
 
 - [SPDK 26.01 NVMe BDEV 性能报告（AMD；本文性能数据与图表来源）](https://review.spdk.io/download/performance-reports/SPDK_nvme_bdev_perf_report_amd_2601.pdf)
 - [SPDK 官方性能报告目录](https://spdk.io/doc/performance_reports.html)
-- Damien Le Moal，《通过轮询优化 I/O 延迟》（“I/O Latency Optimization with Polling”），Vault——Linux 存储与文件系统会议——2017，2017 年 5 月 22 日；图 7、图 8 的原理示意来源。
+- Damien Le Moal，《通过轮询优化 I/O 延迟》（“I/O Latency Optimization with Polling”），Vault——Linux 存储与文件系统会议——2017，2017 年 5 月 22 日；图 5、图 6 的原理示意来源。
