@@ -1,0 +1,115 @@
+{
+  "period": {
+    "start": "2025-11-20",
+    "end": "2026-11-20"
+  },
+  "series": {
+    "hstech_hkd_price": {
+      "start_value": 5574.59,
+      "end_value": 3511.14,
+      "return": -0.37015278253647355,
+      "highest_close_date": "2026-01-14",
+      "highest_close": 5908.26,
+      "peak_to_end": -0.4057235125062202,
+      "max_daily_close_drawdown": -0.4057235125062202,
+      "mdd_peak_date": "2026-01-14",
+      "mdd_trough_date": "2026-11-20"
+    },
+    "fund_cny_nav": {
+      "start_value": 0.7366,
+      "end_value": 0.4353,
+      "return": -0.4090415422210155,
+      "highest_close_date": "2026-01-14",
+      "highest_close": 0.7665,
+      "peak_to_end": -0.43209393346379643,
+      "max_daily_close_drawdown": -0.43209393346379643,
+      "mdd_peak_date": "2026-01-14",
+      "mdd_trough_date": "2026-11-20"
+    },
+    "fund_cny_market_close": {
+      "start_value": 0.733,
+      "end_value": 0.431,
+      "return": -0.41200545702592084,
+      "highest_close_date": "2026-01-14",
+      "highest_close": 0.764,
+      "peak_to_end": -0.43586387434554974,
+      "max_daily_close_drawdown": -0.43586387434554974,
+      "mdd_peak_date": "2026-01-14",
+      "mdd_trough_date": "2026-11-20"
+    },
+    "12083.00": {
+      "start_value": 6219.56,
+      "end_value": 3954.76,
+      "return": -0.3641415148338468
+    },
+    "22083.00": {
+      "start_value": 6215.84,
+      "end_value": 3951.62,
+      "return": -0.3642661329763959
+    }
+  },
+  "quarters": [
+    {
+      "period": "2026Q1",
+      "hstech_hkd_price": -0.15702740038941398,
+      "fund_cny_nav": -0.17507294706127552
+    },
+    {
+      "period": "2026Q2",
+      "hstech_hkd_price": -0.03819287628338308,
+      "fund_cny_nav": -0.05120431194205821
+    },
+    {
+      "period": "2026Q3",
+      "hstech_hkd_price": -0.048821281553050544,
+      "fund_cny_nav": -0.061778803479495936
+    },
+    {
+      "period": "2026Q4截至11月20日",
+      "hstech_hkd_price": -0.17460489105266008,
+      "fund_cny_nav": -0.17634815515610214
+    }
+  ],
+  "limitations": [
+    "港币指数、人民币净值、上海15:00场内价非同一口径",
+    "价格与净值差额不等同实时溢价",
+    "季报截止9月30日，非11月20日跟踪差异",
+    "未获取统一全年盈利预测或同期估值，不能精确拆分盈利与估值贡献"
+  ],
+  "fund_market_vs_full_day_nav_end": -0.009878244888582688,
+  "fund_market_vs_full_day_nav_start": -0.004887320119467908,
+  "nav_return_minus_hkd_index_pp": -3.8888759684541974,
+  "q3_report_annual_nav_return": -0.3838,
+  "q3_report_annual_cny_benchmark_return": -0.3814,
+  "q3_report_annual_difference_pp": -0.24,
+  "recover_nav_one_year_loss_required_gain": 0.6921663220767287,
+  "scenarios": [
+    {
+      "scenario": "承压",
+      "eps_growth": -0.05,
+      "terminal_multiple_ratio": 0.75,
+      "price_return_2y": -0.323125,
+      "price_return_3y": -0.35696875000000006
+    },
+    {
+      "scenario": "温和修复",
+      "eps_growth": 0.08,
+      "terminal_multiple_ratio": 1,
+      "price_return_2y": 0.1664000000000001,
+      "price_return_3y": 0.25971200000000016
+    },
+    {
+      "scenario": "强改善",
+      "eps_growth": 0.15,
+      "terminal_multiple_ratio": 1.15,
+      "price_return_2y": 0.5208749999999995,
+      "price_return_3y": 0.7490062499999997
+    }
+  ],
+  "eps10pct_3y_pe_down25pct_price_return": -0.0017499999999996962,
+  "daily_index_change_points": -138.0,
+  "netease_daily_point_contribution": -62.68,
+  "netease_share_of_daily_net_decline": 0.45420289855072465,
+  "top5_weight_pct": 43.230000000000004,
+  "top10_weight_pct": 72.08
+}

@@ -1,0 +1,484 @@
+[PDF PAGE 1]
+ 
+Page 1 of 9 
+ 
+ 
+For Immediate Release 
+ 
+TENCENT ANNOUNCES 2026 THIRD QUARTER RESULTS 
+Advancing across Models and Applications  
+Accelerating Evolution for the New AI Era  
+ 
+Hong Kong, 18 November 2026 – Tencent Holdings Limited (HKEX: 00700 (HKD Counter) and 80700 (RMB 
+Counter), “Tencent” or “the Company”), a world-leading Internet and technology company in China, today 
+announced the unaudited consolidated results for the quarter ended 30 September 2026 (“3Q2026”). 
+ 
+Mr. Ma Huateng, Chairman and CEO of Tencent, said, “Our recent significant achievements across models 
+and applications have accelerated Tencent’s evolution for the new AI era. Hy4 has achieved China state-of-
+the-art AI model status, and Hy4 flash brings down inference costs to deliver cost performance for real-world 
+use cases. We believe WorkBuddy has grown to become the largest AI application in China, measured by 
+total daily large language model token consumption by users. Our cloud services revenue growth rate 
+increased, driven by WorkBuddy and as we allocated more compute to Model as a Service and GPU rental. 
+Our core businesses remained resilient and vibrant as several evergreen games reached lifetime highs in 
+DAU, and as Video Accounts increased engagement rapidly, particularly among young users, by enriching its 
+content offering.”  
+ 
+3Q2026 Financial Highlights 
+Revenues: +8% YoY, gross profit: +7% YoY, non-IFRS operating profit: -6% YoY 
+ Total revenues were RMB207.3 billion, up 8% over the third quarter of 2025 (“YoY”).  
+ Gross profit was RMB115.9 billion, up 7% YoY. 
+ On a non-IFRS basis, which is intended to reflect core earnings by excluding certain one-time and/or 
+non-cash items: 
+- Operating profit was RMB68.1 billion, down 6% YoY. Operating margin decreased to 33% from 
+38% last year. 
+- Operating profit excluding New AI Products1  was RMB83.3 billion, increased by 8% YoY. 
+Operating margin excluding new AI products contributions was 40%, stable from last year.  
+- Net profit was RMB 68.4 billion, down 6% YoY.  
+- Net profit attributable to equity holders of the Company was RMB66.5 billion, down 6% YoY.  
+- Basic earnings per share were RMB7.382. Diluted earnings per share were RMB7.227. 
+ On an IFRS basis: 
+- Operating profit was RMB59.1 billion, down 7% YoY. Operating margin decreased to 29% from 
+33% last year.  
+- Net profit was RMB65.1 billion, up 0.3% YoY.  
+- Net profit attributable to equity holders of the Company was RMB63.6 billion, up 0.8% YoY. 
+- Basic earnings per share were RMB7.059. Diluted earnings per share were RMB6.947. 
+ Capital expenditure payments was RMB65.1 billion, up 225% YoY. 
+ Total cash was RMB525.7 billion, up 7% YoY. Net debt position totalled RMB13.7 billion.  
+ 
+ 
+1 New AI products primarily consist of Hy, Yuanbao, CodeBuddy, WorkBuddy, and Xiaowei  
+
+[PDF PAGE 2]
+ 
+Page 2 of 9 
+ 
+ We recorded negative free cash flow of RMB69.1 billion for 3Q2026, as net cash generated from operating 
+activities of RMB2.6 billion was more than offset by capital expenditure payments of RMB65.1 billion, 
+media content payments of RMB4.6 billion and lease liability payments of RMB2.0 billion. Included in our 
+operating cash flow were significant prepayments for compute procurement to support enhancements to 
+our Hy model family, WorkBuddy inference needs, and development of AI capabilities across our products 
+and services, as well as to meet external demand for our cloud services. Excluding the prepayments for 
+compute procurement, our free cash flow would have been positive RMB16.9 billion.  
+ The fair value of our shareholdings 2  in listed investee companies (excluding subsidiaries) was 
+RMB505.4 billion as at 30 September 2026, compared with RMB487.2 billion as at 30 June 2026. The 
+carrying book value of our shareholdings in unlisted investee companies (excluding subsidiaries) 
+was RMB397.2 billion as at 30 September 2026, compared with RMB387.9 billion as at 30 June 2026.  
+ During 3Q2026, the Company repurchased approximately 15.9 million shares on the Hong Kong Stock 
+Exchange for an aggregate consideration of approximately HKD7.0 billion. 
+ 
+3Q2026 Management Discussion and Analysis 
+Revenues from VAS increased by 3% year-on-year to RMB98.3 billion for 3Q2026. Domestic Games revenues 
+were RMB47.6 billion, up 11% year-on-year, driven by growth in revenues from games including Delta Force, 
+VALORANT MOBILE and Honour of Kings. International Games revenues were RMB18.9 billion, down 9% 
+year-on-year (or down 4% on a constant currency basis), reflecting a high base period arising from social 
+media excitement around certain Supercell games and from copy sales of Dying Light: The Beast released in 
+the year-ago period. Social Networks revenues decreased by 1% year-on-year to RMB31.8 billion. 
+ 
+Revenues from Marketing Services rose by 19% year-on-year to RMB43.0 billion for 3Q2026. We enhanced 
+our AI-driven ad and content recommendation capabilities and introduced an AI-powered ad solution for 
+content publishers that automates ad insertion and optimises placement timing and duration. Within the Weixin 
+ecosystem, we deepened the integration of closed-loop marketing capabilities, enabling Mini Dramas, Mini 
+Shops and other Weixin-integrated services to advertise more effectively within Weixin and other Tencent-
+managed ad properties. Major industry categories, notably consumer goods and local services, increased 
+marketing spending on our platforms during the quarter. 
+ 
+Revenues from FinTech and Business Services rose by 9% year-on-year to RMB63.7 billion for 3Q2026. 
+FinTech Services revenue growth arose from higher revenues from consumer loan and wealth management 
+services. Business Services revenue growth was primarily driven by a 35% year-on-year increase in cloud 
+services revenues, underpinned by increased demand for AI-related services and continued international 
+expansion. 
+ 
+Operating Metrics  
+ As at 
+30 September 
+2026 
+As at 
+30 September 
+2025 
+Year- 
+on-year 
+change 
+As at  
+30 June 
+2026 
+Quarter-
+on-quarter 
+change 
+ (in millions, unless specified) 
+      
+Combined MAU of Weixin               
+and WeChat 1,449 1,414 2% 1,439 0.7% 
+      
+Mobile device MAU of QQ                                      533 517 3% 520 3% 
+      
+Fee-based VAS subscriptions3 253 265 -5% 259 -2% 
+ 
+ 
+2 Including those held via special purpose vehicles, on an attributable basis  
+3 Average daily number of subscriptions during the quarter  
+
+[PDF PAGE 3]
+ 
+Page 3 of 9 
+ 
+Business Review and Outlook  
+ In November, we released the Hy4 model, with significant advances in foundational capabilities and deep 
+model-product co-design, unlocking a broad range of real-world productivity use cases. Hy4 ranked first4 
+among Chinese models at launch by Agent Arena, demonstrating superior real-world capabilities across 
+signals such as task success, user satisfaction, and steerability. 
+ WorkBuddy became the most used AI product in China, measured by large language model token 
+consumption, with over 10 million DAU collectively consuming over 100 trillion tokens per day, and rapidly 
+increasing enterprise adoption. 
+ We expanded Xiaowei’s availability and use cases, and are deepening its integration with Mini Programs 
+and Mini Shops to facilitate transactional activity. 
+ Video Accounts boosted engagement among young users through deeper collaboration with our internal 
+game, music and TV show content, contributing to over 20% year-on-year increase in total time spent5. 
+ Delta Force (released in 2024) and VALORANT MOBILE (released in 2025) each achieved lifetime high 
+DAUs5, demonstrating our ability to expand our new games’ popularity beyond their launch dates, as well 
+as players’ enthusiasm for emerging and reinvigorated game categories. 
+ We launched a payment app, TenPayGo, that enables foreigners traveling in China to make purchases 
+using overseas cards and digital wallets, and integrates convenient features such as paying for transit 
+rides, handling tax refunds, and AI-powered translation. 
+ 
+For other detailed disclosure, please refer to our website https://www.tencent.com/en-us/investors.html, or follow 
+us via Weixin Official Account (Weixin ID: TencentGlobal):  
+ 
+### 
+ 
+ 
+4 6 November 2026 
+5 3Q2026  
+
+
+[PDF PAGE 4]
+ 
+Page 4 of 9 
+ 
+About Tencent 
+Tencent uses technology to enrich the lives of Internet users.  
+ 
+Our communication and social services, Weixin and QQ, connect users with each other and with digital content 
+and services, both online and offline, making their lives more convenient. Our targeted marketing services 
+helps advertisers reach out to hundreds of millions of consumers in China. Our FinTech and business services 
+support partners’ business growth and assist their digital upgrade.  
+ 
+We invest strategically in AI intelligence, applications and infrastructure, delivering practical utility to users, 
+and empowering human creativity and productivity in the AI era. Tencent was founded in Shenzhen, China, 
+in 1998. Tencent has been listed on the Stock Exchange of Hong Kong since 2004.  
+ 
+Investor contact: IR@tencent.com 
+Media contact: GC@tencent.com  
+ 
+Non-IFRS Financial Measures 
+To supplement the consolidated results of the Group (“the Company and its subsidiaries”) prepared in 
+accordance with IFRS, certain additional non-IFRS financial measures (in terms of operating profit, operating 
+margin, profit for the period, profit attributable to equity holders of the Company, basic EPS and diluted EPS) 
+have been presented in this press release. These unaudited non-IFRS financial measures should be 
+considered in addition to, not as a substitute for, measures of the Group’s financial performance prepared in 
+accordance with IFRS. In addition, these non-IFRS financial measures may be defined differently from similar 
+terms used by other companies. 
+ 
+The Company’s management believes that the non-IFRS financial measures provide investors with useful 
+supplementary information to assess the performance of the Group’s core operations by excluding certain 
+non-cash items and certain impact of investment-related transactions. In addition, non-IFRS adjustments 
+include relevant non-IFRS adjustments for the Group’s major associates based on available published 
+financials of the relevant major associates, or estimates made by the Company’s management based on 
+available information, certain expectations, assumptions and premises. 
+ 
+Forward-Looking Statements 
+This press release contains forward-looking statements relating to the business outlook, estimates of financial 
+performance, forecast business plans and growth strategies of the Group. These forward-looking statements 
+are based on information currently available to the Group and are stated herein on the basis of the outlook at 
+the time of this press release. They are based on certain expectations, assumptions and premises, some of 
+which are subjective or beyond our control. These forward-looking statements may prove to be incorrect and 
+may not be realised in the future. Underlying these forward-looking statements are a lot of risks and 
+uncertainties. In light of the risks and uncertainties, the inclusion of forward-looking statements in this press 
+release should not be regarded as representations by the Board or the Company that the plans and objectives 
+will be achieved, and investors should not place undue reliance on such statements. The Board and the 
+Company assume no obligation to correct or update the forward-looking statements contained in this 
+announcement. 
+
+[PDF PAGE 5]
+ 
+Page 5 of 9 
+ 
+CONDENSED CONSOLIDATED INCOME STATEMENT  
+RMB in millions, unless specified 
+ 
+ Unaudited 
+ 3Q2026 3Q2025 2Q2026 
+Revenues 207,336 192,869 204,785 
+VAS  98,326 95,860 98,414 
+Marketing Services 43,049 36,242 43,565 
+FinTech and Business Services  63,655 58,174 60,286 
+Others 2,306 2,593 2,520 
+Cost of revenues (91,425) (84,071) (86,352) 
+Gross profit 115,911 108,798 118,433 
+Gross margin 56% 56% 58% 
+Selling and marketing expenses (12,144) (11,468) (11,869) 
+General and administrative expenses (44,077) (34,259) (38,808) 
+Other gains/(losses), net (543) 483 (480) 
+Operating profit  59,147 63,554 67,276 
+Operating margin 29% 33% 33% 
+Net gains/(losses) from investments and others 10,057 2,820 11,184 
+Interest income 3,992 4,256 4,202 
+Finance costs (3,487) (3,756) (2,979) 
+Share of profit/(losses) of associates and joint 
+ventures, net 4,482 7,854 (9,993) 
+Profit before income tax 74,191 74,728 69,690 
+Income tax expense (9,052) (9,785) (11,713) 
+Profit for the period 65,139 64,943 57,977 
+  
+  
+ 
+ 
+Attributable to:  
+    Equity holders of the Company 63,612 63,133 56,022 
+    Non-controlling interests 1,527 1,810 1,955 
+    
+Non-IFRS operating profit 68,073 72,570 75,636 
+Non-IFRS profit attributable to equity 
+holders of the Company 66,519 70,551 68,415 
+    
+Earnings per share for profit attributable to 
+equity holders of the Company  
+(in RMB per share)    
+- basic 7.059 6.952 6.207 
+- diluted  6.947 6.779 6.104 
+    
+Non-IFRS earnings per share for profit 
+attributable to equity holders of the 
+Company (in RMB per share)    
+- basic 7.382 7.769 7.581 
+- diluted  7.227 7.575 7.433 
+ 
+
+[PDF PAGE 6]
+ 
+Page 6 of 9 
+ 
+CONDENSED CONSOLIDATED STATEMENT OF COMPREHENSIVE INCOME  
+RMB in millions, unless specified 
+ 
+ Unaudited 
+ 3Q2026 3Q2025 
+Profit for the period 65,139 64,943 
+Other comprehensive income, net of tax:   
+Items that may subsequently reclassified to profit or loss   
+Share of other comprehensive income of associates and joint ventures (149) (722) 
+Transfer of share of other comprehensive income to profit or loss upon disposal 
+and deemed disposal of associates and joint ventures (322) (92) 
+Net (losses)/gains from changes in fair value of financial assets at fair value 
+through other comprehensive income (349) (18) 
+Transfer to profit or loss upon disposal of financial assets at fair value through 
+other comprehensive income 32 (5) 
+Currency translation differences (7,748) (3,895) 
+Net movement in reserves for hedges and others (1,425) 308 
+Items that will not be subsequently reclassified to profit or loss   
+Share of other comprehensive income of associates and joint ventures (589) 12 
+Net gains /(losses) from changes in fair value of financial assets at fair value 
+through other comprehensive income 31,155 17,479 
+Currency translation differences (2,782) (966) 
+Net movement in reserves for hedges - (14) 
+ 17,823 12,087 
+Total comprehensive income for the period 82,962 77,030 
+Attributable to:   
+    Equity holders of the Company 79,549 76,499 
+    Non-controlling interests 3,413 531 
+ 
+OTHER FINANCIAL INFORMATION  
+RMB in millions, unless specified 
+ 
+ 
+ Unaudited 
+ 3Q2026 3Q2025 2Q2026 
+EBITDA (a) 79,439 80,357 85,776 
+Adjusted EBITDA (a) 84,893 86,698 91,372 
+Adjusted EBITDA margin (b) 41% 45% 45% 
+Interest and related expenses 3,672 3,206 3,212 
+Net cash / (debt) (c) (13,702) 102,422 58,191 
+Capital expenditures (d) 81,433 12,983 52,784 
+ 
+Note: 
+(a) EBITDA is calculated as operating profit minus other gains/(losses), net, and adding back depreciation of property, plant and 
+equipment, investment properties as well as right-of-use assets, and amortisation of intangible assets and land use rights. 
+Adjusted EBITDA is calculated as EBITDA plus equity-settled share-based compensation expenses 
+(b) Adjusted EBITDA margin is calculated by dividing Adjusted EBITDA by revenues 
+(c) Net cash / (debt) represents period end balance and is calculated as cash and cash equivalents, plus term deposits and others, 
+including highly liquid investment products held for treasury purposes, minus borrowings and notes payable 
+(d) Capital expenditures primarily consist of investments in IT infrastructure (including computer equipment, components, and 
+software), data centres, land use rights, office premises and intellectual properties (excluding media content) 
+
+[PDF PAGE 7]
+ 
+Page 7 of 9 
+ 
+CONDENSED CONSOLIDATED STATEMENT OF FINANCIAL POSITION  
+RMB in millions, unless specified 
+ Unaudited Audited 
+ As at 30 September, 2026 As at 31 December, 2025 
+ASSETS    
+Non-current assets     
+  Property, plant and equipment 242,500  149,905 
+  Land use rights  21,881  22,339 
+  Right-of-use assets  19,188  17,367 
+  Construction in progress 23,003  9,670 
+  Investment properties 958  950 
+  Intangible assets 199,993  205,999 
+  Investments in associates 313,537  342,409 
+  Investments in joint ventures 6,397  6,303 
+  Financial assets at fair value through profit or loss 232,602  207,157 
+  Financial assets at fair value through other 
+   comprehensive income 337,434  356,640 
+  Prepayments, deposits and other assets 162,901  24,540 
+  Other financial assets 2,678  1,327 
+  Deferred income tax assets 34,286  28,618 
+  Term deposits 41,215  70,302 
+    
+ 1,638,573  1,443,526 
+    
+Current assets    
+  Inventories  727  530 
+  Accounts receivable  50,062  49,930 
+  Prepayments, deposits and other assets 160,469  111,270 
+  Other financial assets 2,663  4,201 
+  Financial assets at fair value through profit or loss 28,290  35,929 
+  Financial assets at fair value through other 
+   comprehensive income 9,866  8,781 
+  Term deposits 215,944  236,801 
+  Restricted cash 8,406  6,977 
+  Cash and cash equivalents  231,717  141,041 
+    
+ 708,144  595,460 
+    
+Total assets 2,346,717  2,038,986 
+
+[PDF PAGE 8]
+ 
+Page 8 of 9 
+ 
+CONDENSED CONSOLIDATED STATEMENT OF FINANCIAL POSITION (continued) 
+RMB in millions, unless specified   
+  Unaudited Audited 
+  As at 30 September, 2026 As at 31 December, 2025 
+EQUITY     
+Equity attributable to equity holders of the Company 
+  Share capital  -  - 
+  Share premium  78,634  63,796 
+  Treasury shares  (518)  (3,450) 
+  Shares held for share award schemes  (10,807)  (7,124) 
+  Other reserves  16,455  90,494 
+  Retained earnings  1,127,817  1,010,436 
+  1,211,581  1,154,152 
+     
+Non-controlling interests  86,363  86,913 
+     
+Total equity  1,297,944  1,241,065      
+LIABILITIES     
+Non-current liabilities     
+  Borrowings  291,379  208,369 
+  Notes payable  159,328  126,204 
+  Long-term payables   11,643  10,544 
+  Other financial liabilities  5,636  2,879 
+  Deferred income tax liabilities  20,790  21,684 
+  Lease liabilities  14,587  13,280 
+  Deferred revenue  1,994  2,210 
+     
+  505,357  385,170 
+     
+Current liabilities     
+  Accounts payable  199,176  121,127 
+  Other payables and accruals  92,438  96,496 
+  Borrowings  88,722  42,618 
+  Notes payable  -  10,542 
+  Current income tax liabilities  19,313  18,558 
+  Other tax liabilities  5,474  3,723 
+  Other financial liabilities  3,270  3,992 
+  Lease liabilities  5,623  5,386 
+  Deferred revenue  129,400  110,309 
+     
+  543,416  412,751 
+     
+Total liabilities  1,048,773  797,921 
+     
+Total equity and liabilities  2,346,717  2,038,986 
+
+[PDF PAGE 9]
+ 
+Page 9 of 9 
+ 
+RECONCILIATIONS OF THE GROUP’S NON-IFRS FINANCIAL MEASURES TO THE NEAREST MEASURES PREPARED IN ACCORDANCE WITH IFRS 
+ 
+As 
+reported 
+Adjustments 
+Non-IFRS 
+RMB in millions, 
+unless specified 
+Share-based 
+compensation (a) 
+Net 
+(gains)/losses 
+from investee 
+companies (b) 
+Amortisation of 
+intangible assets (c) 
+Impairment 
+provisions/ 
+(reversals) (d) 
+SSV & CPP  
+and other 
+donations (e) 
+Others (f) Income tax effects (g) 
+  Unaudited three months ended 30 September 2026   
+Operating profit  59,147   7,115  –  1,621  – 190 – – 68,073  
+Share of profit/(loss) of associates 
+and joint ventures, net  4,482   898  1,294   1,881   50  –  221  – 8,826  
+Profit for the period  65,139   8,013  (8,839) 3,502  915  429   221  (932) 68,448  
+Profit attributable to 
+ equity holders  63,612   7,834  (8,780) 3,123  909  429   221  (829) 66,519  
+Operating margin 29%        33% 
+  Unaudited three months ended 30 June 2026   
+Operating profit  67,276   6,579  –  1,602  – 179 – – 75,636 
+Share of profit/(loss) of associates 
+and joint ventures, net  (9,993)   1,327  12,834   1,356   188  – 647 – 6,359  
+Profit for the period  57,977   7,906  4,316 2,958  (2,064)  864 647 (2,013) 70,591  
+Profit attributable to equity holders  56,022   7,756  4,527 2,611  (2,064)  861 647 (1,945) 68,415  
+Operating margin 33%        37% 
+ 
+As 
+reported 
+Adjustments 
+Non-IFRS 
+ 
+Share-based 
+compensation (a) 
+Net 
+(gains)/losses 
+from investee 
+companies (b) 
+Amortisation of 
+intangible assets (c) 
+Impairment 
+provisions/ 
+(reversals) (d) 
+SSV & CPP (e) Others (f) 
+Income  
+tax effects 
+(g) 
+  Unaudited three months ended 30 September 2025   
+Operating profit  63,554   7,188  –  1,622 – 206 – – 72,570 
+Share of profit/(loss) of associates 
+and joint ventures, net  7,854   909 (555)  1,755  (1)  – 360 – 10,322 
+Profit for the period  64,943  8,097 1,703 3,377 (4,798) 321 360 (1,207) 72,796 
+Profit attributable to equity holders  63,133   7,905  1,730 3,003  (4,805) 321 360 (1,096) 70,551 
+Operating margin  33%        38% 
+Note: 
+(a) Including put options granted to employees of investee companies on their shares and shares to be issued under investee companies’ share-based incentive plans which can be acquired by the Group, and other 
+incentives 
+(b) Including net (gains)/losses on deemed disposals/disposals of investee companies, fair value changes arising from investee companies, and other expenses in relation to equity transactions of investee companies 
+(c) Amortisation of intangible assets resulting from acquisitions 
+(d) Mainly including impairment provisions/(reversals) for associates, joint ventures, goodwill and other intangible assets arising from acquisitions 
+(e) Mainly including donations and expenses incurred for the Group’s Sustainable Social Value and Common Prosperity Programme ("SSV & CPP”) initiatives 
+(f) Primarily non-recurring compliance-related costs and expenses incurred for certain litigation settlements of the Group and/or arising from investee companies 
+(g) Income tax effects of non-IFRS adjustments  
