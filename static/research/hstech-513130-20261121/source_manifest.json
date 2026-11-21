@@ -1,266 +1,302 @@
 [
   {
-    "file": "sources/hsi_review_20261120.pdf",
     "url": "https://www.hsi.com.hk/content/dam/wpb/hsil/en_hk/press_releases/content/20261120T174500.pdf",
     "accessed_date": "2026-11-21",
     "note": "恒生指数公司2026年11月20日检讨公告；第2、8、9页；12月7日生效；权重是假设11月18日调仓的示意，不是12月7日实际权重。",
     "bytes": 802389,
-    "sha256": "8d726fa50e4e739f0920107355cc55a70fee00ebac5bcbcb69cbeebd459aa736"
+    "sha256": "8d726fa50e4e739f0920107355cc55a70fee00ebac5bcbcb69cbeebd459aa736",
+    "local_archive_file": "sources/hsi_review_20261120.pdf",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/hsi_review_20261120.txt",
     "url": "",
     "accessed_date": "2026-11-21",
     "note": "上述PDF文本提取。",
     "bytes": 18222,
-    "sha256": "f68f10c62a984579810cc8ad9310de8fad76935aedf67d1309be017a044383c6"
+    "sha256": "f68f10c62a984579810cc8ad9310de8fad76935aedf67d1309be017a044383c6",
+    "local_archive_file": "sources/hsi_review_20261120.txt",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/hsi_methodology_202610.pdf",
     "url": "https://www.hsi.com.hk/static/uploads/contents/en/dl_centre/methodologies/IM_hsteche.pdf",
     "accessed_date": "2026-11-21",
     "note": "2026年10月新版编制方案，50股、主题、筛选及权重上限。",
     "bytes": 318341,
-    "sha256": "5b4d3b0c72829d0eac35f09f8d13564f133b3c87d1a0e38522c01704a6c7db8f"
+    "sha256": "5b4d3b0c72829d0eac35f09f8d13564f133b3c87d1a0e38522c01704a6c7db8f",
+    "local_archive_file": "sources/hsi_methodology_202610.pdf",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/hsi_methodology_202610.txt",
     "url": "",
     "accessed_date": "2026-11-21",
     "note": "上述PDF文本提取。",
     "bytes": 24047,
-    "sha256": "d09dd9d69536b0bcc13942da8e8220d0705a134d4fd4a7f7f72d0d652eb52d09"
+    "sha256": "d09dd9d69536b0bcc13942da8e8220d0705a134d4fd4a7f7f72d0d652eb52d09",
+    "local_archive_file": "sources/hsi_methodology_202610.txt",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/hsi_factsheet_20261030.pdf",
     "url": "https://www.hsi.com.hk/static/uploads/contents/en/dl_centre/factsheets/hsteche.pdf",
     "accessed_date": "2026-11-21",
     "note": "2026年10月月报，数据截至10月30日；图片型PDF，估值和波动率已视觉核对。",
     "bytes": 1081116,
-    "sha256": "1242fce21f08831a67fd7601274616401965038f0d15558c123f773a7cd05efb"
+    "sha256": "1242fce21f08831a67fd7601274616401965038f0d15558c123f773a7cd05efb",
+    "local_archive_file": "sources/hsi_factsheet_20261030.pdf",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/hsi_factsheet_20261030_page1.png",
     "url": "",
     "accessed_date": "2026-11-21",
     "note": "上述月报第1页渲染，估值和波动率。",
     "bytes": 354973,
-    "sha256": "f79884d25afeb5a5c7339830d758a421d2d4b2a78c7d9a37a67c85613b7cc190"
+    "sha256": "f79884d25afeb5a5c7339830d758a421d2d4b2a78c7d9a37a67c85613b7cc190",
+    "local_archive_file": "sources/hsi_factsheet_20261030_page1.png",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/hsi_factsheet_20261030_page2.png",
     "url": "",
     "accessed_date": "2026-11-21",
     "note": "上述月报第2页渲染，成份股。",
     "bytes": 395831,
-    "sha256": "b7c8219216f993fbec9097bf16f478f9683fc0cdc13c4bfe3a3e0ca565ede167"
+    "sha256": "b7c8219216f993fbec9097bf16f478f9683fc0cdc13c4bfe3a3e0ca565ede167",
+    "local_archive_file": "sources/hsi_factsheet_20261030_page2.png",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/hsi_constituents_20261120.pdf",
     "url": "https://www.hsi.com.hk/api/wsit-hsi-ddoc-ea-public-website-proxy/v1/content/gcs/download?resource=%2Fpublic-website%2Fwebapp%2Fcontents%2Fen%2Findexes%2Freport%2Fhstech%2Fcon_20Nov26.pdf",
     "accessed_date": "2026-11-21",
     "note": "11月20日正式日终成份股报告；比官网Top10卡片的11月19日数据更新。",
     "bytes": 52762,
-    "sha256": "f6e02740450380b4581e73c838931c451094f4f3e27819612850c5f52a781eac"
+    "sha256": "f6e02740450380b4581e73c838931c451094f4f3e27819612850c5f52a781eac",
+    "local_archive_file": "sources/hsi_constituents_20261120.pdf",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/hsi_constituents_20261120.txt",
     "url": "",
     "accessed_date": "2026-11-21",
     "note": "日终成份股PDF文本提取。",
     "bytes": 6657,
-    "sha256": "cd6d596e7c512e566219f54b3589ebc6e0decd3b8e51937e858dd6117df6aede"
+    "sha256": "cd6d596e7c512e566219f54b3589ebc6e0decd3b8e51937e858dd6117df6aede",
+    "local_archive_file": "sources/hsi_constituents_20261120.txt",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/hsi_index_daily_20261120.csv",
     "url": "https://www.hsi.com.hk/api/wsit-hsi-ddoc-ea-public-website-proxy/v1/content/gcs/download?resource=%2Fpublic-website%2Fwebapp%2Fcontents%2Fen%2Findexes%2Freport%2Fhstech%2Fidx_20Nov26.csv",
     "accessed_date": "2026-11-21",
     "note": "官方指数收盘日表，UTF-16制表符分隔。",
     "bytes": 506,
-    "sha256": "e04b0c81386797eae068fd55c9a9e61e76180f35169ba728dd8736a2b6d090ce"
+    "sha256": "e04b0c81386797eae068fd55c9a9e61e76180f35169ba728dd8736a2b6d090ce",
+    "local_archive_file": "sources/hsi_index_daily_20261120.csv",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/tencent_2026q3.pdf",
     "url": "https://static.www.tencent.com/website-2026-upload/Tencent-Announces-2026-Third-Quarter-Results-1800-6d9a2a.pdf",
     "accessed_date": "2026-11-21",
     "note": "腾讯11月18日公布三季报；营收、非IFRS利润、CAPEX、现金流及预付款说明。",
     "bytes": 513271,
-    "sha256": "26ddf049c27b213e3b33b56e39c792a376da5d62cada605f9b67e0528cec5bcd"
+    "sha256": "26ddf049c27b213e3b33b56e39c792a376da5d62cada605f9b67e0528cec5bcd",
+    "local_archive_file": "sources/tencent_2026q3.pdf",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/tencent_2026q3.txt",
     "url": "",
     "accessed_date": "2026-11-21",
     "note": "上述PDF文本提取。",
     "bytes": 22094,
-    "sha256": "d6901a1d510a6ab414fcb78d7f4c03253923dd7c5a88df97256a59271f85f42d"
+    "sha256": "d6901a1d510a6ab414fcb78d7f4c03253923dd7c5a88df97256a59271f85f42d",
+    "local_archive_file": "sources/tencent_2026q3.txt",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/alibaba_202609quarter.pdf",
     "url": "https://data.alibabagroup.com/ecms-files/1532295521/e676aff4-e76d-489b-960a-47b9cf36485d/Alibaba%20Group%20Announces%20September%20Quarter%202026%20Results%20and%20Interim%20Results%20for%20the%20Six%20Months%20Ended%20September%2030,%202026.pdf",
     "accessed_date": "2026-11-21",
     "note": "阿里11月19日季报；云、非GAAP利润、CAPEX、FCF、新股配售。",
     "bytes": 608678,
-    "sha256": "e209d22532ce2c29610fa2e2863cb13892aafa6dd02b193cbfb8fbe2ddf0318c"
+    "sha256": "e209d22532ce2c29610fa2e2863cb13892aafa6dd02b193cbfb8fbe2ddf0318c",
+    "local_archive_file": "sources/alibaba_202609quarter.pdf",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/alibaba_202609quarter.txt",
     "url": "",
     "accessed_date": "2026-11-21",
     "note": "上述PDF文本提取。",
     "bytes": 96502,
-    "sha256": "f49cd55a761f97b00b6cbcbe43d140cee9b8f7dcb5d7c7367218e1bd2928f506"
+    "sha256": "f49cd55a761f97b00b6cbcbe43d140cee9b8f7dcb5d7c7367218e1bd2928f506",
+    "local_archive_file": "sources/alibaba_202609quarter.txt",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/xiaomi_2026q2_hkex.pdf",
     "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0818/2026081801014.pdf",
     "accessed_date": "2026-11-21",
     "note": "小米8月18日二季报，港交所发行人公告；不是尚未公布的三季报。",
     "bytes": 740463,
-    "sha256": "b3270bb2e3e8e5a1c4aac485bb686b9ae97fc520414455e8fa557c3c9062ef45"
+    "sha256": "b3270bb2e3e8e5a1c4aac485bb686b9ae97fc520414455e8fa557c3c9062ef45",
+    "local_archive_file": "sources/xiaomi_2026q2_hkex.pdf",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/xiaomi_2026q2_hkex.txt",
     "url": "",
     "accessed_date": "2026-11-21",
     "note": "上述PDF文本提取。",
     "bytes": 97050,
-    "sha256": "6b7be09fe0dfb3a2bfd01ea711f3913fcb92f82563cf6bb3803f589f1f131033"
+    "sha256": "6b7be09fe0dfb3a2bfd01ea711f3913fcb92f82563cf6bb3803f589f1f131033",
+    "local_archive_file": "sources/xiaomi_2026q2_hkex.txt",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/meituan_2026q2.pdf",
     "url": "https://media-meituan.todayir.com/202608281731561718399005_en.pdf",
     "accessed_date": "2026-11-21",
     "note": "美团8月28日二季报，由公司IR网页链接；注意单季与上半年区别。",
     "bytes": 163106,
-    "sha256": "7ce5fad275ba07f815774eb6ce7364e05318fdbc96263a610a560ed29a3c9504"
+    "sha256": "7ce5fad275ba07f815774eb6ce7364e05318fdbc96263a610a560ed29a3c9504",
+    "local_archive_file": "sources/meituan_2026q2.pdf",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/meituan_2026q2.txt",
     "url": "",
     "accessed_date": "2026-11-21",
     "note": "上述PDF文本提取。",
     "bytes": 71474,
-    "sha256": "f36c0916a5f1af14cb6fd28f9910ff5b4b32b5db9e2ddcf30a26298806faa056"
+    "sha256": "f36c0916a5f1af14cb6fd28f9910ff5b4b32b5db9e2ddcf30a26298806faa056",
+    "local_archive_file": "sources/meituan_2026q2.txt",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/meituan_ir_20261121.html",
     "url": "https://www.meituan.com/en-US/investor-relations",
     "accessed_date": "2026-11-21",
     "note": "公布Q3业绩计划为11月27日；本次数据截止时尚未发布。",
     "bytes": 155633,
-    "sha256": "93599c37b6d529da693912346eba2f921fe20d3cf3f098d57ecfb8d857366c90"
+    "sha256": "93599c37b6d529da693912346eba2f921fe20d3cf3f098d57ecfb8d857366c90",
+    "local_archive_file": "sources/meituan_ir_20261121.html",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/netease_2026q3_company_release.html",
     "url": "https://www.tradingview.com/news/prnewswire:9d009f048c321:0-netease-announces-third-quarter-2026-unaudited-financial-results/",
     "accessed_date": "2026-11-21",
     "note": "网易11月19日公司新闻稿的PR Newswire转载全文；不是TradingView分析文章。直接IR/SEC入口访问受限。",
     "bytes": 658172,
-    "sha256": "a388244f172d2f09df8a9913546cc6fef71ff11c53360b6cf6caf0b69c3ddd21"
+    "sha256": "a388244f172d2f09df8a9913546cc6fef71ff11c53360b6cf6caf0b69c3ddd21",
+    "local_archive_file": "sources/netease_2026q3_company_release.html",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/netease_2026q3_company_release.txt",
     "url": "",
     "accessed_date": "2026-11-21",
     "note": "上述公司新闻稿全文文本提取。",
     "bytes": 36004,
-    "sha256": "6a42f6aed8e6d138664f5632383d974f379de43c442385ae6b8ebac0e0cc3d77"
+    "sha256": "6a42f6aed8e6d138664f5632383d974f379de43c442385ae6b8ebac0e0cc3d77",
+    "local_archive_file": "sources/netease_2026q3_company_release.txt",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/fund_nav_official.json",
     "url": "https://www.huatai-pb.com/common-web/chart/fundnetchart/getFundNetChartJson?fundcode=513130&charttype=2&from=2025-11-20&to=2026-11-20&siteId=9496d23c648f4a72a79150c3f2ac669b",
     "accessed_date": "2026-11-21",
     "note": "基金公司官方单位净值、累计净值历史，243日。两列一致，观察期未发生现金分红。",
     "bytes": 7399,
-    "sha256": "f921bf4b1006fa8ab88830bf392528c23c4a3fa4180e0ce527280d9ae71b0a72"
+    "sha256": "f921bf4b1006fa8ab88830bf392528c23c4a3fa4180e0ce527280d9ae71b0a72",
+    "local_archive_file": "sources/fund_nav_official.json",
+    "published_file": "fund_nav_official.json",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/fund_market_prices.json",
     "url": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh513130,day,2025-11-20,2026-11-20,640,qfq",
     "accessed_date": "2026-11-21",
     "note": "腾讯财经收盘历史，day列为日期/开/收/高/低/量；观察期未分红，字段请求qfq但返回day。与当日快照核验。",
     "bytes": 16765,
-    "sha256": "ea0cfe45d0b650d7d245071a72e1658a71776405f3447d2313a824ec76b4ce3a"
+    "sha256": "ea0cfe45d0b650d7d245071a72e1658a71776405f3447d2313a824ec76b4ce3a",
+    "local_archive_file": "sources/fund_market_prices.json",
+    "published_file": "fund_market_prices.json",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/fund_quote_20261120.txt",
     "url": "https://qt.gtimg.cn/q=sh513130",
     "accessed_date": "2026-11-21",
     "note": "GB18030行情快照，2026-11-20 16:14:43。ETF上海收盘15:00，不能和港股16:00净值直接当实时溢价。",
     "bytes": 575,
-    "sha256": "dd03fbfcf6bfa176f717c366f24f4c196486d32ebff01aa9a71cd02ed7389b42"
+    "sha256": "dd03fbfcf6bfa176f717c366f24f4c196486d32ebff01aa9a71cd02ed7389b42",
+    "local_archive_file": "sources/fund_quote_20261120.txt",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/hstech_total_history.json",
     "url": "https://www.hsi.com.hk/api/wsit-hsi-ddoc-ea-public-website-proxy/v1/product-data/pub/indexes/metadata/v2?data=valueHistoryPub&language=en-hk&indexCodes=12083.00,22083.00",
     "accessed_date": "2026-11-21",
     "note": "官方毛/净全收益历史，用各自起终点计算，不能与价格指数基点混用。",
     "bytes": 98647,
-    "sha256": "a6e5a72247710c4ffeeec80806d0cd5321af4561f021937f1b29ed74d588110d"
+    "sha256": "a6e5a72247710c4ffeeec80806d0cd5321af4561f021937f1b29ed74d588110d",
+    "local_archive_file": "sources/hstech_total_history.json",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/fund_q1_2026.txt",
     "url": "https://www.huatai-pb.com/upload/pdf/1776782412722-369-1kmayu81w4jvu.pdf",
     "accessed_date": "2026-11-21",
     "note": "官方季报文本提取，基金管理人同期分析为观点而非因果计量；原下载尾部损坏，仅存可读取文本，原PDF链接供核查。",
     "bytes": 31016,
-    "sha256": "d8eb9398d722ade4001cae9192decb743aff17c0e39035bca6fc2502f4dea172"
+    "sha256": "d8eb9398d722ade4001cae9192decb743aff17c0e39035bca6fc2502f4dea172",
+    "local_archive_file": "sources/fund_q1_2026.txt",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/fund_q2_2026.txt",
     "url": "https://www.huatai-pb.com/upload/pdf/1784549400316-477-1kv7qac0kv5j2.pdf",
     "accessed_date": "2026-11-21",
     "note": "官方季报文本提取；原PDF尾部损坏，未存损坏PDF。",
     "bytes": 31014,
-    "sha256": "9e23d7b33945322b12d032a5fb6e534341ad6aec7713458217d176d3d1e2b7d6"
+    "sha256": "9e23d7b33945322b12d032a5fb6e534341ad6aec7713458217d176d3d1e2b7d6",
+    "local_archive_file": "sources/fund_q2_2026.txt",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/fund_q3_2026.txt",
     "url": "https://www.huatai-pb.com/upload/pdf/1793014202336-969-1l4xbrfe28k2o.pdf",
     "accessed_date": "2026-11-21",
     "note": "官方Q3报告，4页收益及基准，8页市场分析，10页基金持仓。原PDF尾部损坏，未存损坏PDF。",
     "bytes": 28976,
-    "sha256": "8fea537e0b9be732301cdf921509a4aad24ad306ec3ff7f9492644939998bb9e"
+    "sha256": "8fea537e0b9be732301cdf921509a4aad24ad306ec3ff7f9492644939998bb9e",
+    "local_archive_file": "sources/fund_q3_2026.txt",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/fund_prospectus_20260429.txt",
     "url": "https://www.huatai-pb.com/upload/pdf/1777383300206-334-1kmzs1uzgwv5o.pdf",
     "accessed_date": "2026-11-21",
     "note": "基金公司2026年第1号招募说明书文本提取。原下载尾部损坏但107页文本可读取，仅存文本。",
     "bytes": 304604,
-    "sha256": "4141fba6e5e6161abc7591c30799c22e3653cef5fd7ad9321ceae70b8da4a796"
+    "sha256": "4141fba6e5e6161abc7591c30799c22e3653cef5fd7ad9321ceae70b8da4a796",
+    "local_archive_file": "sources/fund_prospectus_20260429.txt",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/fund_summary_20260318.txt",
     "url": "https://www.huatai-pb.com/upload/pdf/1773736501352-796-1kit679bibp2w.pdf",
     "accessed_date": "2026-11-21",
     "note": "发行人产品概要的东方财富镜像文本提取；原文管理0.20%、托管0.05%、运作综合0.26%。原PDF尾部不完整，仅存文本。镜像：https://pdf.dfcfw.com/pdf/H2_AN202603171820603700_1.pdf",
     "bytes": 12527,
-    "sha256": "dc28c37aa186e7534efeb3627c8be3e66ddf0135b5c8fe1acce7400de3ab6859"
+    "sha256": "dc28c37aa186e7534efeb3627c8be3e66ddf0135b5c8fe1acce7400de3ab6859",
+    "local_archive_file": "sources/fund_summary_20260318.txt",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/fund_official_reports_metadata.json",
     "url": "https://www.huatai-pb.com/common-web/cms/content/getContents",
     "accessed_date": "2026-11-21",
     "note": "POST categoryId=0044a86e21b45e5ae063260212ac151b,pageNumber=1,pageSize=10；发行人报告URL清单。",
     "bytes": 6167,
-    "sha256": "b90102a8c33c0f2759506148a6ac46ac738f9989ffa2216316f1ef8d094b1ce3"
+    "sha256": "b90102a8c33c0f2759506148a6ac46ac738f9989ffa2216316f1ef8d094b1ce3",
+    "local_archive_file": "sources/fund_official_reports_metadata.json",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/fund_official_legal_metadata.json",
     "url": "https://www.huatai-pb.com/common-web/cms/content/getContents",
     "accessed_date": "2026-11-21",
     "note": "POST categoryId=0044a86e21b55e5ae063260212ac151b,pageNumber=1,pageSize=10；发行人法律文件清单。",
     "bytes": 6426,
-    "sha256": "9d1902309b1a0df3703c78bc5b22ecb35dc75c2f5c45630c1f9defddb933fc81"
+    "sha256": "9d1902309b1a0df3703c78bc5b22ecb35dc75c2f5c45630c1f9defddb933fc81",
+    "local_archive_file": "sources/fund_official_legal_metadata.json",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   },
   {
-    "file": "sources/hstech_price_history.json",
     "url": "https://www.hsi.com.hk/api/wsit-hsi-ddoc-ea-public-website-proxy/v1/product-data/pub/indexes/metadata/v2?data=valueHistoryPub&language=en-hk&indexCodes=02083.00",
     "accessed_date": "2026-11-21",
     "note": "本任务重新获取官方价格历史1230日。",
     "bytes": 49318,
-    "sha256": "d86a90c29a0a0396dd373363f91c6c5c0598bc591072a84d4384bfdc1d21db5b"
+    "sha256": "d86a90c29a0a0396dd373363f91c6c5c0598bc591072a84d4384bfdc1d21db5b",
+    "local_archive_file": "sources/hstech_price_history.json",
+    "published_file": "hstech_price_history.json",
+    "publication_note": "原始资料正文仅存本地研究归档；报告请访问发行人原始URL，不在博客镜像全文。"
   }
 ]
